@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 
 import Newsletter from "../../../components/newsletter";
 
-import { MyContext } from "../../../App";
+import { MyContext } from "../../../../App";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";

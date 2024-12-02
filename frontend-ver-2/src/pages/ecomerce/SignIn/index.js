@@ -16,11 +16,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { useContext } from 'react';
 
-import { MyContext } from '../../App';
-import { postData } from '../../utils/api';
+import { MyContext } from '../../../App';
+import {login, postData} from '../../../utils/api';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { firebaseApp } from "../../firebase";
+import { firebaseApp } from "../../../firebase";
+import {jwtDecode} from "jwt-decode";
 
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(firebaseApp);
@@ -51,76 +52,86 @@ const SignIn = () => {
         }))
       }
 
-      const signIn=(e)=>{
+    const signIn = (e) => {
         e.preventDefault();
         setIsLoading(true);
 
         try {
-          if (formFields.email === "") {
-            context.setAlertBox({
-              open: true,
-              error: true,
-              msg: "Email can not be blank!",
-            });
-            return false;
-          }
-    
-          if (formFields.password === "") {
-            context.setAlertBox({
-              open: true,
-              error: true,
-              msg: "Password can not be blank!",
-            });
-            return false;
-          }
-    
-          postData("/api/user/signin", formFields).then((res) => {
-            localStorage.removeItem("user");
-    
-            localStorage.setItem("token", res?.token);
-            context.setIsLogin(true);
-  
-            const user = {
-              userName: res?.user?.name,
-              email: res?.user?.email,
-              userId: res.user?.id,
-              image: res?.user?.images?.length > 0 ? res?.user?.images[0] : "",
-              isAdmin: res.user?.isAdmin,
-            };
-            
-            localStorage.setItem("user", JSON.stringify(user));
-  
-            if (res.error !== true) {
-              context.setAlertBox({
-                open: true,
-                error: false,
-                msg: "User Login Successfully!",
-              });
-    
-              setTimeout(() => {
-                setIsLoading(false);
-                history("/");
-              }, 2000);
-            }else{
+            if (formFields.email === "") {
+                context.setAlertBox({
+                    open: true,
+                    error: true,
+                    msg: "Email can not be blank!",
+                });
+                return false;
+            }
+
+            if (formFields.password === "") {
+                context.setAlertBox({
+                    open: true,
+                    error: true,
+                    msg: "Password can not be blank!",
+                });
+                return false;
+            }
+
+            login("/shop/users/login", formFields).then((res) => {
+                console.log("res",res)
+                if (res?.error) {
+                    setIsLoading(false);
+                    context.setAlertBox({
+                        open: true,
+                        error: true,
+                        msg: res.msg || "Login failed",
+                    });
+                    return;
+                }
+
+                // Nếu thành công, lưu token vào localStorage
+                const token = res;
+                const decodedPayload = jwtDecode(token);
+                localStorage.setItem("token", token);
+                localStorage.setItem("role",decodedPayload.roles)
+                localStorage.setItem("email",decodedPayload.sub)
+                // const user = {
+                //     userName: res?.user?.name,
+                //     email: res?.user?.email,
+                //     userId: res.user?.id,
+                //     image: res?.user?.images?.length > 0 ? res?.user?.images[0] : "",
+                //     isAdmin: res.user?.isAdmin,
+                // };
+                // localStorage.setItem("user", JSON.stringify(user));
+
+                context.setIsLogin(true);
+                context.setAlertBox({
+                    open: true,
+                    error: false,
+                    msg: "User Login Successfully!",
+                });
+
+                setTimeout(() => {
+                    setIsLoading(false);
+                    history("/");
+                }, 2000);
+            }).catch(error => {
                 setIsLoading(false);
                 context.setAlertBox({
                     open: true,
                     error: true,
-                    msg: res.msg,
-                  });
-            }
-  
-           
-          });
+                    msg: "An error occurred during login.",
+                });
+                console.log(error);
+            });
         } catch (error) {
-          console.log(error);
+            console.log(error);
+            setIsLoading(false);
         }
-
-      }
-
+    };
 
 
-      const signInWithGoogle=()=>{
+
+
+    const signInWithGoogle=()=>{
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
         .then((result) => {

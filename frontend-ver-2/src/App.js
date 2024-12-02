@@ -4,26 +4,9 @@ import "./App.css";
 import "./responsive.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./components/header/header";
-import Footer from "./components/footer/footer";
-import Home from "./pages/Home/index";
-import About from "./pages/About/index";
-import Listing from "./pages/Listing";
-import NotFound from "./pages/NotFound";
-import DetailsPage from "./pages/Details";
-import Checkout from "./pages/checkout";
-import axios from "axios";
-import Cart from "./pages/cart";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import MyList from "./pages/myList";
-import Loader from "./assets/images/loading.gif";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
 import { fetchDataFromApi, postData } from "./utils/api";
-import SearchPage from "./pages/Search";
-import Orders from "./pages/Orders";
-import MyAccount from "./pages/MyAccount";
+import Ecommerce from "./pages/ecomerce/Ecommerce";
+import AdminDashBoard from "./pages/admindashboard/AdminDashBoard";
 
 const MyContext = createContext();
 
@@ -231,54 +214,10 @@ function App() {
   return (
     <BrowserRouter>
       <MyContext.Provider value={value}>
-        <Snackbar
-          open={alertBox.open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-        >
-          <Alert
-            onClose={handleClose}
-            autoHideDuration={6000}
-            severity={alertBox.error === false ? "success" : "error"}
-            variant="filled"
-            sx={{ width: "100%" }}
-          >
-            {alertBox.msg}
-          </Alert>
-        </Snackbar>
-
-        {isLoading === true && (
-          <div className="loader">
-            <img src={Loader} />
-          </div>
-        )}
-
-        {categories?.categoryList?.length !== 0 && <Header />}
-
         <Routes>
-          <Route exact={true} path="/" element={<Home />} />
-          <Route
-            exact={true}
-            path="/products/category/:id"
-            element={<Listing single={true} />}
-          />
-          <Route
-            exact={true}
-            path="/products/subCat/:id"
-            element={<Listing single={false} />}
-          />
-          <Route exact={true} path="/product/:id" element={<DetailsPage />} />
-          <Route exact={true} path="/cart" element={<Cart />} />
-          <Route exact={true} path="/signIn" element={<SignIn />} />
-          <Route exact={true} path="/signUp" element={<SignUp />} />
-          <Route exact={true} path="/myList" element={<MyList />} />
-          <Route exact={true} path="/checkout" element={<Checkout />} />
-          <Route exact={true} path="/search" element={<SearchPage />} />
-          <Route exact={true} path="/orders" element={<Orders />} />
-          <Route exact={true} path="/my-account" element={<MyAccount />} />
-          <Route exact={true} path="*" element={<NotFound />} />
+          <Route path="/ecommerce/*" element={<Ecommerce />} />
+          <Route path="/admin/*" element={<AdminDashBoard />} />
         </Routes>
-        <Footer />
       </MyContext.Provider>
     </BrowserRouter>
   );

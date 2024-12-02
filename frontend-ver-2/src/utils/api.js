@@ -27,6 +27,33 @@ export const uploadImage = async (url, formData) => {
     return res;
 }
 
+export const login = async (url, formData) => {
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await fetch("http://localhost:8080" + url, {
+            method: 'POST',
+            headers: {
+                // 'Authorization': `Bearer ${token}`, // Include your API key in the Authorization header
+                'Content-Type': 'application/json', // Adjust the content type as needed
+              },
+           
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            const data = await response.text();
+            return data;
+        } else {
+            const errorData = await response.json();
+            return errorData;
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 export const postData = async (url, formData) => {
 
     try {
@@ -35,13 +62,13 @@ export const postData = async (url, formData) => {
             headers: {
                 'Authorization': `Bearer ${token}`, // Include your API key in the Authorization header
                 'Content-Type': 'application/json', // Adjust the content type as needed
-              },
-           
+            },
+
             body: JSON.stringify(formData)
         });
 
 
-      
+
 
         if (response.ok) {
             const data = await response.json();
@@ -58,7 +85,6 @@ export const postData = async (url, formData) => {
 
 
 }
-
 
 export const editData = async (url, updatedData ) => {
     const { res } = await axios.put(`${"https://ecommerce-server-node.onrender.com"}${url}`,updatedData)
