@@ -1,25 +1,23 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import Rating from "@mui/material/Rating";
-import { Button } from "@mui/material";
-import QuantityBox from "../../components/quantityBox";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { MyContext } from "../../App";
-import axios from "axios";
+import { Button } from "@mui/material";
+import Rating from "@mui/material/Rating";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { MyContext } from "../../../App";
+import QuantityBox from "../../../components/quantityBox";
+import "./style.css";
 
 import { useNavigate } from "react-router-dom";
 
-import { loadStripe } from "@stripe/stripe-js";
-import { deleteData, editData, fetchDataFromApi } from "../../utils/api";
-import emprtCart from "../../assets/images/empty.png";
 import HomeIcon from "@mui/icons-material/Home";
+import emprtCart from "../../../assets/images/empty.png";
+import { deleteData, editData, fetchDataFromApi } from "../../../utils/api";
 
 const Cart = () => {
   const [cartData, setCartData] = useState([]);
   const [productQuantity, setProductQuantity] = useState();
-  const [chengeQuantity, setchengeQuantity] = useState(0);
+  const [changeQuantity, setchangeQuantity] = useState(0);
   let [cartFields, setCartFields] = useState({});
   const [isLogin, setIsLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -45,12 +43,12 @@ const Cart = () => {
 
   const quantity = (val) => {
     setProductQuantity(val);
-    setchengeQuantity(val);
+    setchangeQuantity(val);
     context.getCartData();
   };
 
   const selectedItem = (item, quantityVal) => {
-    if (chengeQuantity !== 0) {
+    if (changeQuantity !== 0) {
       setIsLoading(true);
       const user = JSON.parse(localStorage.getItem("user"));
       cartFields.productTitle = item?.productTitle;

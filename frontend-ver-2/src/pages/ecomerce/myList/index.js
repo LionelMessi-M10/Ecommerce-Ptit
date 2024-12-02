@@ -1,20 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import "./style.css";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import Rating from "@mui/material/Rating";
 import { Button } from "@mui/material";
-import QuantityBox from "../../components/quantityBox";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { MyContext } from "../../App";
-import axios from "axios";
+import Rating from "@mui/material/Rating";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { MyContext } from "../../../App";
+import "./style.css";
 
 import { useNavigate } from "react-router-dom";
 
-import { loadStripe } from "@stripe/stripe-js";
-import { deleteData, editData, fetchDataFromApi } from "../../utils/api";
-import emprtCart from "../../assets/images/empty-list.png";
 import HomeIcon from "@mui/icons-material/Home";
+import emprtCart from "../../../assets/images/empty-list.png";
+import { deleteData, fetchDataFromApi } from "../../../utils/api";
 
 const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);

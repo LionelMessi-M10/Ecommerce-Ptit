@@ -1,11 +1,11 @@
-
+import axios from "axios";
 
 const apiEndpoint = 'http://localhost:9002/hr/ProductRams';
-// const apiFetchProductRam = 'http://localhost:9002/hr/positions/all';
+const apiFetchProductRam = 'http://localhost:9002/hr/positions/all';
 const apiAddProductRam = 'http://localhost:9002/hr/ProductRams/create';
 const apiUpdateProductRam = 'http://localhost:9002/hr/ProductRams/update';
 const apiDeleteProductRam = 'http://localhost:9002/hr/ProductRams/delete';
-// const apiFilterProductRam = 'http://localhost:9002/hr/ProductRams/search';
+const apiFilterProductRam = 'http://localhost:9002/hr/ProductRams/search';
 
 
 export const fetchProductRam = async () => {

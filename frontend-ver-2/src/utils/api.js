@@ -1,18 +1,18 @@
 import axios from "axios";
 
-const token=localStorage.getItem("token");
+const token = localStorage.getItem("token");
 
-const params={
+const params = {
     headers: {
         'Authorization': `Bearer ${token}`, // Include your API key in the Authorization header
         'Content-Type': 'application/json', // Adjust the content type as needed
-      },
+    },
 
-} 
+}
 
 export const fetchDataFromApi = async (url) => {
     try {
-        const { data } = await axios.get("https://ecommerce-server-node.onrender.com" + url,params)
+        const { data } = await axios.get("https://ecommerce-server-node.onrender.com" + url, params)
         return data;
     } catch (error) {
         console.log(error);
@@ -23,7 +23,7 @@ export const fetchDataFromApi = async (url) => {
 
 export const uploadImage = async (url, formData) => {
 
-    const { res } = await axios.post("https://ecommerce-server-node.onrender.com" + url , formData)
+    const { res } = await axios.post("https://ecommerce-server-node.onrender.com" + url, formData)
     return res;
 }
 
@@ -36,8 +36,8 @@ export const login = async (url, formData) => {
             headers: {
                 // 'Authorization': `Bearer ${token}`, // Include your API key in the Authorization header
                 'Content-Type': 'application/json', // Adjust the content type as needed
-              },
-           
+            },
+
             body: JSON.stringify(formData)
         });
 
@@ -86,18 +86,18 @@ export const postData = async (url, formData) => {
 
 }
 
-export const editData = async (url, updatedData ) => {
-    const { res } = await axios.put(`${"https://ecommerce-server-node.onrender.com"}${url}`,updatedData)
+export const editData = async (url, updatedData) => {
+    const { res } = await axios.put(`${"https://ecommerce-server-node.onrender.com"}${url}`, updatedData)
     return res;
 }
 
-export const deleteData = async (url ) => {
-    const { res } = await axios.delete(`${"https://ecommerce-server-node.onrender.com"}${url}`,params)
+export const deleteData = async (url) => {
+    const { res } = await axios.delete(`${"https://ecommerce-server-node.onrender.com"}${url}`, params)
     return res;
 }
 
 
-export const deleteImages = async (url,image ) => {
-    const { res } = await axios.delete(`${"https://ecommerce-server-node.onrender.com"}${url}`,image);
+export const deleteImages = async (url, image) => {
+    const { res } = await axios.delete(`${"https://ecommerce-server-node.onrender.com"}${url}`, image);
     return res;
 }

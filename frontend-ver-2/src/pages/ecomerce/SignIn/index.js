@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Button } from '@mui/material';
-import { useState } from 'react';
-import GoogleImg from '../../assets/images/google.png';
+import TextField from '@mui/material/TextField';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import GoogleImg from '../../../assets/images/google.png';
 
 
 import Backdrop from '@mui/material/Backdrop';
@@ -17,11 +15,11 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 
 import { MyContext } from '../../../App';
-import {login, postData} from '../../../utils/api';
+import { login, postData } from '../../../utils/api';
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { jwtDecode } from "jwt-decode";
 import { firebaseApp } from "../../../firebase";
-import {jwtDecode} from "jwt-decode";
 
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(firebaseApp);

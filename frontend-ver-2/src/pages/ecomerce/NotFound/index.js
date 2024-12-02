@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import './style.css';
-import NotFoundImg from '../../assets/images/page-404.png';
 import { Button } from '@mui/material';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import NotFoundImg from '../../../assets/images/page-404.png';
+import './style.css';
 
-import { MyContext } from "../../App";
+import { MyContext } from "../../../App";
 
 const NotFound = () => {
 

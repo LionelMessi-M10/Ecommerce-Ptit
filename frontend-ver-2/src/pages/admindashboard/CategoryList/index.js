@@ -3,31 +3,15 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
 import { emphasize, styled } from "@mui/material/styles";
 
-import React, { useEffect } from "react";
-
-// import Button from "@mui/material/Button";
-// import DashboardBox from "./components/dashboardBox";
-// import { FaUserCircle } from "react-icons/fa";
-// import { IoMdCart } from "react-icons/io";
-// import { MdShoppingBag } from "react-icons/md";
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-// import Pagination from '@mui/material/Pagination';
-// import { MyContext } from "../../App";
-// import { useState } from "react";
-// import { emphasize, styled } from "@mui/material/styles";
-// import Breadcrumbs from "@mui/material/Breadcrumbs";
-// import Chip from "@mui/material/Chip";
-// import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
-// import DashboardBox from "../Dashboard/components/dashboardBox";
-// import { Pagination, Rating } from "@mui/material";
 import { deleteCategoryList, fetchCategoryList } from "./CategoryListService/CategoryListService";
 import "./listCategory.css";
 

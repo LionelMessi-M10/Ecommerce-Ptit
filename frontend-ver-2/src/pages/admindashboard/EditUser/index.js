@@ -1,20 +1,14 @@
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { emphasize, styled } from "@mui/material/styles";
-import Chip from "@mui/material/Chip";
-import HomeIcon from "@mui/icons-material/Home";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { useRef, useState } from "react";
-import Rating from '@mui/material/Rating';
+import HomeIcon from "@mui/icons-material/Home";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Button from "@mui/material/Button";
+import Checkbox from '@mui/material/Checkbox';
+import Chip from "@mui/material/Chip";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { emphasize, styled } from "@mui/material/styles";
+import { useRef, useState } from "react";
 import { FaCloudUploadAlt, FaTrashAlt } from "react-icons/fa";
 import './editUser.css';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 
 
 

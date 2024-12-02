@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const apiEndpoint = 'http://localhost:9002/hr/Products';
 const apiFetchProduct = 'http://localhost:9002/hr/positions/all';
 const apiAddProduct = 'http://localhost:9002/hr/Products/create';

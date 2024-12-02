@@ -1,55 +1,13 @@
-import { emphasize, styled } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
-import HomeIcon from "@mui/icons-material/Home";
+import { emphasize, styled } from "@mui/material/styles";
 
-import React, { useRef } from "react";
-import Slider from "react-slick";
-import { MdBrandingWatermark } from "react-icons/md";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-
-import LinearProgress from '@mui/material/LinearProgress';
-import UserAvatarImgComponent from "../../../components/userAvatarImg";
-import Rating from '@mui/material/Rating';
-// import Button from "@mui/material/Button";
-import { FaReply } from "react-icons/fa";
-// import DashboardBox from "./components/dashboardBox";
-import { HiDotsVertical } from "react-icons/hi";
-// import { FaUserCircle } from "react-icons/fa";
-// import { IoMdCart } from "react-icons/io";
-// import { MdShoppingBag } from "react-icons/md";
-import { GiStarsStack } from "react-icons/gi";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useContext, useEffect, useState } from "react";
-import { IoIosTimer } from "react-icons/io";
 import Button from '@mui/material/Button';
-import { Chart } from "react-google-charts";
-import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import React from "react";
 
-import { FaEye } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-// import Pagination from '@mui/material/Pagination';
-// import { MyContext } from "../../App";
-import Checkbox from "@mui/material/Checkbox";
-// import { useState } from "react";
-import DashboardBox from "../Dashboard/components/dashboardBox";
-import { FaUserCircle } from "react-icons/fa";
-import { IoMdCart } from "react-icons/io";
-import { MdShoppingBag } from "react-icons/md";
-// import { emphasize, styled } from "@mui/material/styles";
-// import Breadcrumbs from "@mui/material/Breadcrumbs";
-// import Chip from "@mui/material/Chip";
-// import HomeIcon from "@mui/icons-material/Home";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Link } from "react-router-dom";
-// import DashboardBox from "../Dashboard/components/dashboardBox";
-// import { Pagination, Rating } from "@mui/material";
-import { MyContext } from "../../../App";
 
 
 const StyledBreadcumb = styled(Chip)(({ theme }) => {
@@ -186,12 +144,6 @@ const AddProductWeight = () => {
                                         </tr>
                                     </tbody>
                                 </table>
-
-                                {/* <div className="d-flex tableFooter">
-                                    <p>showing <b>12</b> of <b>60</b> results</p>
-                                    <Pagination count={10} color="primary" className="pagination"
-                                        showFirstButton showLastButton />
-                                </div> */}
                             </div>
                         </div>
                     </div>

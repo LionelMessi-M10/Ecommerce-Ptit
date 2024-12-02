@@ -1,45 +1,21 @@
-
-// import DashboardBox from "./components/dashboardBox";
-import { HiDotsVertical } from "react-icons/hi";
-// import { FaUserCircle } from "react-icons/fa";
-// import { IoMdCart } from "react-icons/io";
-// import { MdShoppingBag } from "react-icons/md";
-import { GiStarsStack } from "react-icons/gi";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useContext, useEffect, useState } from "react";
-import { IoIosTimer } from "react-icons/io";
 import Button from '@mui/material/Button';
-import { Chart } from "react-google-charts";
-import InputLabel from '@mui/material/InputLabel';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { useState } from "react";
 
-import { FaEye } from "react-icons/fa";
-import { FaPencilAlt } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-// import Pagination from '@mui/material/Pagination';
-// import { MyContext } from "../../App";
-import Checkbox from "@mui/material/Checkbox";
-// import { useState } from "react";
-import DashboardBox from "../Dashboard/components/dashboardBox";
-import { FaUserCircle } from "react-icons/fa";
-import { IoMdCart } from "react-icons/io";
-import { MdShoppingBag } from "react-icons/md";
-import { emphasize, styled } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import HomeIcon from "@mui/icons-material/Home";
+import { Pagination } from "@mui/material";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
-import HomeIcon from "@mui/icons-material/Home";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { emphasize, styled } from "@mui/material/styles";
+import { FaPencilAlt } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-// import DashboardBox from "../Dashboard/components/dashboardBox";
-import { Pagination, Rating } from "@mui/material";
-import { MyContext } from "../../App";
 import "./listUser.css";
+
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-
 
 const StyledBreadcumb = styled(Chip)(({ theme }) => {
     const backgroundColor =
@@ -165,8 +141,7 @@ const ListUser = () => {
                                         <div className="d-flex align-items-center productBox">
                                             <div className="imgWrapper">
                                                 <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
+                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp" className="w-100" alt='image-user' />
                                                 </div>
                                             </div>
                                         </div>
@@ -194,7 +169,7 @@ const ListUser = () => {
                                             <div className="imgWrapper">
                                                 <div className="img card shadow m-0">
                                                     <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
+                                                        className="w-100" alt='image-user'/>
                                                 </div>
                                             </div>
                                         </div>
@@ -222,7 +197,7 @@ const ListUser = () => {
                                             <div className="imgWrapper">
                                                 <div className="img card shadow m-0">
                                                     <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
+                                                        className="w-100" alt='image-user' />
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +225,7 @@ const ListUser = () => {
                                             <div className="imgWrapper">
                                                 <div className="img card shadow m-0">
                                                     <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
+                                                        className="w-100" alt='image-user' />
                                                 </div>
                                             </div>
                                         </div>
@@ -278,7 +253,7 @@ const ListUser = () => {
                                             <div className="imgWrapper">
                                                 <div className="img card shadow m-0">
                                                     <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
+                                                        className="w-100" alt='image-user' />
                                                 </div>
                                             </div>
                                         </div>
@@ -306,7 +281,7 @@ const ListUser = () => {
                                             <div className="imgWrapper">
                                                 <div className="img card shadow m-0">
                                                     <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
+                                                        className="w-100" alt='image-user' />
                                                 </div>
                                             </div>
                                         </div>

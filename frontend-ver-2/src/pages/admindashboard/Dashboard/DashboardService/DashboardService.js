@@ -1,5 +1,5 @@
 
-
+import axios from "axios";
 
 
 const apiEndpoint = 'http://localhost:9002/hr/Dashboards';
@@ -7,7 +7,7 @@ const apiFetchDashboard = 'http://localhost:9002/hr/positions/all';
 const apiAddDashboard = 'http://localhost:9002/hr/Dashboards/create';
 const apiUpdateDashboard = 'http://localhost:9002/hr/Dashboards/update';
 const apiDeleteDashboard = 'http://localhost:9002/hr/Dashboards/delete';
-// const apiFilterDashboard = 'http://localhost:9002/hr/Dashboards/search';
+const apiFilterDashboard = 'http://localhost:9002/hr/Dashboards/search';
 
 
 export const fetchDashboard = async () => {

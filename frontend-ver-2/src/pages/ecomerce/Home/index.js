@@ -1,21 +1,19 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import CatSlider from "../../../components/catSlider";
 import SliderBanner from "./slider/index";
-import CatSlider from "../../components/catSlider";
 
-import Banners from "../../components/banners";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import homeBannerPlaceholder from "../../../assets/images/homeBannerPlaceholder.jpg";
+import Banners from "../../../components/banners";
+import Product from "../../../components/product";
 import "./style.css";
-import Product from "../../components/product";
-import homeBannerPlaceholder from "../../assets/images/homeBannerPlaceholder.jpg";
 
 import Slider from "react-slick";
-// import TopProducts from "./TopProducts";
-import axios from "axios";
-import {MyContext} from "../../App";
+import { MyContext } from "../../../App";
 
-import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import {fetchDataFromApi} from "../../utils/api";
+import Tabs from "@mui/material/Tabs";
+import { fetchDataFromApi } from "../../../utils/api";
 
 const Home = (props) => {
     const [categories, setcategories] = useState([]);

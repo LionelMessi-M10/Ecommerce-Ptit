@@ -1,29 +1,27 @@
-import React, {useEffect, useState, createContext} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { createContext, useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import '../../App.css';
 import "../../responsive.css";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
 
-import Header from "../../components/header/header";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import Loader from "../../assets/images/loading.gif";
 import Footer from "../../components/footer/footer";
-import Home from "../../pages/ecomerce/Home/index";
-import About from "./pages/About/index";
-import Listing from "../../pages/ecomerce/Listing";
-import NotFound from "../../pages/ecomerce/NotFound";
+import Header from "../../components/header/header";
 import DetailsPage from "../../pages/ecomerce/Details";
-import Checkout from "../../pages/ecomerce/checkout";
-import axios from "axios";
-import Cart from "../../pages/ecomerce/cart";
+import Home from "../../pages/ecomerce/Home/index";
+import Listing from "../../pages/ecomerce/Listing";
+import MyAccount from "../../pages/ecomerce/MyAccount";
+import NotFound from "../../pages/ecomerce/NotFound";
+import Orders from "../../pages/ecomerce/Orders";
+import SearchPage from "../../pages/ecomerce/Search";
 import SignIn from "../../pages/ecomerce/SignIn";
 import SignUp from "../../pages/ecomerce/SignUp";
+import Cart from "../../pages/ecomerce/cart";
+import Checkout from "../../pages/ecomerce/checkout";
 import MyList from "../../pages/ecomerce/myList";
-import Loader from "./assets/images/loading.gif";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import {fetchDataFromApi, postData} from "../../utils/api";
-import SearchPage from "../../pages/ecomerce/Search";
-import Orders from "../../pages/ecomerce/Orders";
-import MyAccount from "../../pages/ecomerce/MyAccount";
+import { fetchDataFromApi, postData } from "../../utils/api";
 
 const MyContext = createContext();
 

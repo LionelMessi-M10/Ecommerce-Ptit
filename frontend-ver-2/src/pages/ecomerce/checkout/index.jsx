@@ -2,9 +2,9 @@ import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
 import React, { useContext, useEffect, useState } from "react";
-import { MyContext } from "../../App";
 import { useNavigate } from "react-router-dom";
-import { fetchDataFromApi, postData, deleteData } from "../../utils/api";
+import { MyContext } from "../../../App";
+import { deleteData, fetchDataFromApi, postData } from "../../../utils/api";
 
 const Checkout = () => {
   const [formFields, setFormFields] = useState({
@@ -33,9 +33,9 @@ const Checkout = () => {
 
       setTotalAmount(
         res.length !== 0 &&
-          res
-            .map((item) => parseInt(item.price) * item.quantity)
-            .reduce((total, value) => total + value, 0)
+        res
+          .map((item) => parseInt(item.price) * item.quantity)
+          .reduce((total, value) => total + value, 0)
       );
     });
 
@@ -52,7 +52,7 @@ const Checkout = () => {
   const payNow = (e) => {
     e.preventDefault();
 
-     if (formFields.fullName === "") {
+    if (formFields.fullName === "") {
       context.setAlertBox({
         open: true,
         error: true,
@@ -145,7 +145,7 @@ const Checkout = () => {
       }),
     };
 
-  
+
     var options = {
       key: process.env.REACT_APP_RAZORPAY_KEY_ID,
       key_secret: process.env.REACT_APP_RAZORPAY_KEY_SECRET,
@@ -171,24 +171,24 @@ const Checkout = () => {
           email: user.email,
           userid: user.userId,
           products: cartData,
-          date:addressInfo?.date
+          date: addressInfo?.date
         };
 
         console.log(payLoad)
-          
+
 
         postData(`/api/orders/create`, payLoad).then((res) => {
-             fetchDataFromApi(`/api/cart?userId=${user?.userId}`).then((res) => {
-            res?.length!==0 && res?.map((item)=>{
-                deleteData(`/api/cart/${item?.id}`).then((res) => {
-                })    
+          fetchDataFromApi(`/api/cart?userId=${user?.userId}`).then((res) => {
+            res?.length !== 0 && res?.map((item) => {
+              deleteData(`/api/cart/${item?.id}`).then((res) => {
+              })
             })
-                setTimeout(()=>{
-                    context.getCartData();
-                },1000);
-                history("/orders");
+            setTimeout(() => {
+              context.getCartData();
+            }, 1000);
+            history("/orders");
           });
-         
+
         });
       },
 
@@ -387,10 +387,10 @@ const Checkout = () => {
                         <td>
                           {(cartData?.length !== 0
                             ? cartData
-                                ?.map(
-                                  (item) => parseInt(item.price) * item.quantity
-                                )
-                                .reduce((total, value) => total + value, 0)
+                              ?.map(
+                                (item) => parseInt(item.price) * item.quantity
+                              )
+                              .reduce((total, value) => total + value, 0)
                             : 0
                           )?.toLocaleString("en-US", {
                             style: "currency",

@@ -1,26 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { IoMdCloudUpload } from "react-icons/io";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import PropTypes from "prop-types";
+import React, { useContext, useEffect, useState } from "react";
+import { IoMdCloudUpload } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import {
   deleteData,
-  deleteImages,
   editData,
   fetchDataFromApi,
-  postData,
-  uploadImage,
-} from "../../utils/api";
+  uploadImage
+} from "../../../utils/api";
 
-import { MyContext } from "../../App";
+import { MyContext } from "../../../App";
 
-import NoUserImg from "../../assets/images/no-user.jpg";
 import CircularProgress from "@mui/material/CircularProgress";
+import NoUserImg from "../../../assets/images/no-user.jpg";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;

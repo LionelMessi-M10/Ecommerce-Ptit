@@ -1,12 +1,12 @@
-import React, { useEffect, useState, createContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { createContext, useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./responsive.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { fetchDataFromApi, postData } from "./utils/api";
-import Ecommerce from "./pages/ecomerce/Ecommerce";
 import AdminDashBoard from "./pages/admindashboard/AdminDashBoard";
+import Ecommerce from "./pages/ecomerce/Ecommerce";
+import { fetchDataFromApi, postData } from "./utils/api";
 
 const MyContext = createContext();
 
@@ -190,7 +190,6 @@ function App() {
     alertBox,
     setAlertBox,
     setIsLogin,
-    isLogin,
     setUser,
     user,
     setIsAddingInCart,
@@ -203,7 +202,6 @@ function App() {
     setEnableFilterTab,
     enableFilterTab,
     setIsOpenFilters,
-    isOpenFilters,
     setIsBottomShow,
     isBottomShow,
     openSearch,
@@ -226,3 +224,4 @@ function App() {
 export default App;
 
 export { MyContext };
+

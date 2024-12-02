@@ -1,21 +1,19 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import { Button } from "@mui/material";
-import { useState } from "react";
-import GoogleImg from "../../assets/images/google.png";
+import TextField from "@mui/material/TextField";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import GoogleImg from "../../../assets/images/google.png";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { postData } from "../../utils/api";
 import { useContext } from "react";
-import { MyContext } from "../../App";
+import { MyContext } from "../../../App";
+import { postData } from "../../../utils/api";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { firebaseApp } from "../../firebase";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { firebaseApp } from "../../../firebase";
 
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(firebaseApp);

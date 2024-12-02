@@ -1,11 +1,11 @@
-
+import axios from "axios";
 
 const apiEndpoint = 'http://localhost:9002/hr/Categorys';
-// const apiFetchCategory = 'http://localhost:9002/hr/positions/all';
+const apiFetchCategory = 'http://localhost:9002/hr/positions/all';
 const apiAddCategory = 'http://localhost:9002/hr/Categorys/create';
 const apiUpdateCategory = 'http://localhost:9002/hr/Categorys/update';
 const apiDeleteCategory = 'http://localhost:9002/hr/Categorys/delete';
-// const apiFilterCategory = 'http://localhost:9002/hr/Categorys/search';
+const apiFilterCategory = 'http://localhost:9002/hr/Categorys/search';
 
 
 export const fetchCategory = async () => {

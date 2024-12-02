@@ -1,3 +1,6 @@
+
+import axios from "axios";
+
 const apiEndpoint = 'http://localhost:9002/hr/ProductUploads';
 const apiFetchProductUpload = 'http://localhost:9002/hr/positions/all';
 const apiAddProductUpload = 'http://localhost:9002/hr/ProductUploads/create';

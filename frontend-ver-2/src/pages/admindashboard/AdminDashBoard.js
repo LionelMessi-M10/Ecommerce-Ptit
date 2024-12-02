@@ -1,25 +1,26 @@
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { MyContext } from "../../App";
 import '../../App.css';
-import Dashboard from '../../pages/admindashboard/Dashboard';
 import HeaderAdmin from '../../components/headerAdmin';
-import { createContext, useEffect, useState } from 'react';
-import Products from '../../pages/admindashboard/Products';
-import ProductDetails from '../../pages/admindashboard/ProductDetails';
-import ProductUpload from '../../pages/admindashboard/ProductUpload';
-import AddProductRam from '../../pages/admindashboard/AddProductRam';
-import AddProductWeight from '../../pages/admindashboard/AddProductWeight';
-import AddProductSize from '../../pages/admindashboard/AddProductSize';
-import CategoryList from '../../pages/admindashboard/CategoryList';
-import AddCategory from '../../pages/admindashboard/AddCategory';
-import AddBrand from '../../pages/admindashboard/AddBrand';
-import OrderList from '../../pages/admindashboard/OrderList';
-import ProductEdit from '../../pages/admindashboard/ProductEdit';
-import EditCategory from '../../pages/admindashboard/EditCategory';
-import AddUser from '../../pages/admindashboard/AddUser';
-import ListUser from '../../pages/admindashboard/ListUser';
-import EditUser from '../../pages/admindashboard/EditUser';
 import SidebarAdmin from "../../components/sidebarAdmin";
+import AddBrand from '../../pages/admindashboard/AddBrand';
+import AddCategory from '../../pages/admindashboard/AddCategory';
+import AddProductRam from '../../pages/admindashboard/AddProductRam';
+import AddProductSize from '../../pages/admindashboard/AddProductSize';
+import AddProductWeight from '../../pages/admindashboard/AddProductWeight';
+import AddUser from '../../pages/admindashboard/AddUser';
+import CategoryList from '../../pages/admindashboard/CategoryList';
+import Dashboard from '../../pages/admindashboard/Dashboard';
+import EditCategory from '../../pages/admindashboard/EditCategory';
+import EditUser from '../../pages/admindashboard/EditUser';
+import ListUser from '../../pages/admindashboard/ListUser';
+import OrderList from '../../pages/admindashboard/OrderList';
+import ProductDetails from '../../pages/admindashboard/ProductDetails';
+import ProductEdit from '../../pages/admindashboard/ProductEdit';
+import Products from '../../pages/admindashboard/Products';
+import ProductUpload from '../../pages/admindashboard/ProductUpload';
 
 
 function AdminDashBoard() {
@@ -70,13 +71,11 @@ function AdminDashBoard() {
                     }
 
 
-                    <div className={`content ${isHindSidebarAndHeader === true && 'full'} 
+                    <div className={`content ${isHindSidebarAndHeader === true && 'full'}
             ${isToggleSidebar === true ? 'toggle' : ''}`}>
                         <Routes>
                             <Route path="/" exact={true} element={<Dashboard />} />
                             <Route path="/dashboard" exact={true} element={<Dashboard />} />
-                            <Route path="/login" exact={true} element={<Login />} />
-                            <Route path="/signUp" exact={true} element={<SignUp />} />
                             <Route path='/products' exact={true} element={<Products />} />
                             <Route path='/product/details' exact={true} element={<ProductDetails />} />
                             <Route path='/product/upload' exact={true} element={<ProductUpload />} />

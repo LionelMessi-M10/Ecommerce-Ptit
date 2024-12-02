@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { fetchDataFromApi } from "../../utils/api";
-import Pagination from "@mui/material/Pagination";
-import Dialog from "@mui/material/Dialog";
-import { MdClose } from "react-icons/md";
 import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import React, { useContext, useEffect, useState } from "react";
+import { MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { MyContext } from "../../App";
+import { MyContext } from "../../../App";
+import { fetchDataFromApi } from "../../../utils/api";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);

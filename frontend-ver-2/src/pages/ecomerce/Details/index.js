@@ -1,23 +1,17 @@
-import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { Button } from "@mui/material";
 import Rating from "@mui/material/Rating";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import InnerImageZoom from "react-inner-image-zoom";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+import { Link, useParams } from "react-router-dom";
 import Slider from "react-slick";
-import { useRef } from "react";
-import { useState } from "react";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useEffect } from "react";
-import { Button } from "@mui/material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import QuantityBox from "../../components/quantityBox";
-import Product from "../../components/product";
-import axios from "axios";
-import { MyContext } from "../../App";
-import { fetchDataFromApi, postData } from "../../utils/api";
+import { MyContext } from "../../../App";
+import Product from "../../../components/product";
+import QuantityBox from "../../../components/quantityBox";
+import { fetchDataFromApi, postData } from "../../../utils/api";
 
 const DetailsPage = (props) => {
   const [zoomInage, setZoomImage] = useState(

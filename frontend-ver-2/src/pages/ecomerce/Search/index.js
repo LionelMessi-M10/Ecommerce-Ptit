@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
-import Product from "../../components/product";
-import { Button } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Sidebar from "../../../components/Sidebar";
+import Product from "../../../components/product";
 
-import { MyContext } from "../../App";
-import { fetchDataFromApi } from "../../utils/api";
+import { MyContext } from "../../../App";
+import { fetchDataFromApi } from "../../../utils/api";
 
 import CircularProgress from "@mui/material/CircularProgress";
 

@@ -1,3 +1,4 @@
+import axios from "axios";
 
 
 const apiEndpoint = 'http://localhost:9002/hr/Brands';
@@ -5,7 +6,7 @@ const apiFetchBrand = 'http://localhost:9002/hr/positions/all';
 const apiAddBrand = 'http://localhost:9002/hr/Brands/create';
 const apiUpdateBrand = 'http://localhost:9002/hr/Brands/update';
 const apiDeleteBrand = 'http://localhost:9002/hr/Brands/delete';
-// const apiFilterBrand = 'http://localhost:9002/hr/Brands/search';
+const apiFilterBrand = 'http://localhost:9002/hr/Brands/search';
 
 
 export const fetchBrand = async () => {

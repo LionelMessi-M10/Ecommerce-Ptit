@@ -1,11 +1,11 @@
-
+import axios from "axios";
 
 const apiEndpoint = 'http://localhost:9002/hr/ProductSizes';
-// const apiFetchProductSize = 'http://localhost:9002/hr/positions/all';
+const apiFetchProductSize = 'http://localhost:9002/hr/positions/all';
 const apiAddProductSize = 'http://localhost:9002/hr/ProductSizes/create';
 const apiUpdateProductSize = 'http://localhost:9002/hr/ProductSizes/update';
 const apiDeleteProductSize = 'http://localhost:9002/hr/ProductSizes/delete';
-// const apiFilterProductSize = 'http://localhost:9002/hr/ProductSizes/search';
+const apiFilterProductSize = 'http://localhost:9002/hr/ProductSizes/search';
 
 
 export const fetchProductSize = async () => {

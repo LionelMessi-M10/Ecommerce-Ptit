@@ -1,19 +1,18 @@
 
-import { emphasize, styled } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
-import HomeIcon from "@mui/icons-material/Home";
+import { emphasize, styled } from "@mui/material/styles";
 
 import React, { useRef } from "react";
-import Slider from "react-slick";
-import { MdBrandingWatermark } from "react-icons/md";
 import { BiSolidCategoryAlt } from "react-icons/bi";
+import { MdBrandingWatermark } from "react-icons/md";
+import Slider from "react-slick";
 
-import LinearProgress from '@mui/material/LinearProgress';
-import UserAvatarImgComponent from "../../components/userAvatarImg";
-import Rating from '@mui/material/Rating';
 import Button from "@mui/material/Button";
+import Rating from '@mui/material/Rating';
 import { FaReply } from "react-icons/fa";
+import UserAvatarImgComponent from "../../../components/userAvatarImg";
 
 
 
