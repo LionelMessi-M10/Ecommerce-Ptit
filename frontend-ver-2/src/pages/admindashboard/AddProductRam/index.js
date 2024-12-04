@@ -3,7 +3,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Chip from "@mui/material/Chip";
 import { emphasize, styled } from "@mui/material/styles";
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 // import Button from "@mui/material/Button";
 // import DashboardBox from "./components/dashboardBox";
@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import {fetchDataFromApi, postData} from "../../../utils/api";
 
 
 const StyledBreadcumb = styled(Chip)(({ theme }) => {
@@ -38,6 +39,36 @@ const StyledBreadcumb = styled(Chip)(({ theme }) => {
 
 
 const AddProductRam = () => {
+    const [rams,setRams] = useState([]);
+    const [newRam, setNewRam] = useState('');
+
+    const getAllRams = async () => {
+        const response = await fetchDataFromApi("/seller/rams")
+        setRams(response);
+    }
+
+    const addRam = async () => {
+        if (!newRam.trim()) {
+            alert("Please enter a valid RAM value.");
+            return;
+        }
+
+        const response = await postData("/seller/createRam", { ram: newRam });
+        if (response.id) {
+            setNewRam("");
+            getAllRams();
+        } else {
+            alert("Failed to add RAM. Please try again.");
+        }
+    };
+
+    useEffect(() => {
+        getAllRams();
+    },[])
+
+    console.log("rams",rams);
+
+
     return (
         <>
             <div className="right-content w-100">
@@ -70,9 +101,14 @@ const AddProductRam = () => {
                             <div className="card p-4">
                                 <div className="form-group">
                                     <h6>PRODUCT RAM</h6>
-                                    <input type="text" />
+                                    <input
+                                        type="text"
+                                        value={newRam}
+                                        onChange={(e) => setNewRam(e.target.value)}
+                                        placeholder="Enter RAM size (e.g., 8GB)"
+                                    />
                                 </div>
-                                <Button className="btn-lg btn-blue btn-big">Add Ram</Button>
+                                <Button className="btn-lg btn-blue btn-big" onClick={addRam}>Add Ram</Button>
                             </div>
                         </div>
                     </div>
@@ -92,60 +128,23 @@ const AddProductRam = () => {
                                     </thead>
 
                                     <tbody>
+                                    {rams.length > 0 ? (
+                                        rams.map((ram, index) => (
+                                            <tr key={index}>
+                                                <td>{ram.ram}</td>
+                                                <td>
+                                                    <div className="actions d-flex align-items-center">
+                                                        <Button className="success" color="success"><FaPencilAlt /></Button>
+                                                        <Button className="error" color="error"><MdDelete /></Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
                                         <tr>
-                                            <td>4GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
+                                            <td colSpan="2" className="text-center">No RAMs available</td>
                                         </tr>
-                                        <tr>
-                                            <td>6GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>12GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>16GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    )}
                                     </tbody>
                                 </table>
                             </div>

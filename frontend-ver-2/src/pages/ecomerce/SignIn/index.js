@@ -109,7 +109,7 @@ const SignIn = () => {
 
                 setTimeout(() => {
                     setIsLoading(false);
-                    history("/");
+                    history("/ecommerce");
                 }, 2000);
             }).catch(error => {
                 setIsLoading(false);
@@ -172,7 +172,7 @@ const SignIn = () => {
               });
     
               setTimeout(() => {
-                history("/");
+                history("/ecommerce");
                 context.setIsLogin(true);
                 setIsLoading(false);
               }, 2000);

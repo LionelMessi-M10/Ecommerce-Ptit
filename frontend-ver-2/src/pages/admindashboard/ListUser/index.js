@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
@@ -14,6 +14,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./listUser.css";
+import {deleteData, fetchDataFromApi} from "../../../utils/api";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -42,12 +43,28 @@ const ListUser = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [showBy, setshowBy] = useState('');
     const [showBysetCatBy, setCatBy] = useState('');
+    const [users, setUsers] = useState([]);
     const open = Boolean(anchorEl);
 
     const ITEM_HEIGHT = 48;
 
+    const fetchAllUsers = async () => {
+        const data = await fetchDataFromApi("/admin/users");
+        setUsers(data);
+    }
 
+    useEffect(() => {
+        fetchAllUsers();
+    }, []);
 
+    console.log("users",users)
+
+    const handleDelete = async (id) => {
+        await deleteData(`/admin/delete/${id}`)
+        alert("User deleted successfully");
+        fetchAllUsers();
+
+    }
     return (
         <>
             <div className="right-content w-100">
@@ -135,202 +152,47 @@ const ListUser = () => {
                             </thead>
 
                             <tbody>
-                                <tr>
-
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp" className="w-100" alt='image-user' />
+                            {users.length > 0 ? (
+                                users.map((user) => (
+                                    <tr key={user.id}>
+                                        <td>
+                                            <div className="d-flex align-items-center productBox">
+                                                <div className="imgWrapper">
+                                                    <div className="img card shadow m-0">
+                                                        <img
+                                                            src={"http://localhost:8080" + user.image}
+                                                            className="w-100"
+                                                            alt={`image-user-${user.id}`}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" alt='image-user'/>
-                                                </div>
+                                        </td>
+                                        <td>{user.username}</td>
+                                        <td>{user.address}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.telephone}</td>
+                                        <td>
+                                            <div className="actions d-flex align-items-center">
+                                                <Link to={`/admin/user/edit/${user.id}`}>
+                                                    <Button className="success" color="success">
+                                                        <FaPencilAlt />
+                                                    </Button>
+                                                </Link>
+                                                <Button className="error" color="error" onClick={() => handleDelete(user.id)}>
+                                                    <MdDelete />
+                                                </Button>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
                                 <tr>
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" alt='image-user' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
+                                    <td colSpan="6" className="text-center">
+                                        No users found.
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" alt='image-user' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" alt='image-user' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" alt='image-user' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div className="d-flex align-items-center productBox">
-                                            <div className="imgWrapper">
-                                                <div className="img card shadow m-0">
-                                                    <img src="https://mironcoder-hotash.netlify.app/images/product/01.webp"
-                                                        className="w-100" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Tuan</td>
-                                    <td>Cau giay-Ha noi</td>
-                                    <td>tuan@gmail.com</td>
-                                    <td>872435884568</td>
-                                    <td>
-                                        <div className="actions d-flex align-items-center">
-                                            {/* <Link to="/product/details">
-                                                <Button className="secondary"
-                                                    color="secondary"><FaEye /></Button>
-                                            </Link> */}
-                                            <Link to="/user/edit">
-                                                <Button className="success" color="success"><FaPencilAlt /></Button>
-                                            </Link>
-                                            <Button className="error" color="error"><MdDelete /></Button>
-                                        </div>
-                                    </td>
-                                </tr>
+                            )}
 
                             </tbody>
                         </table>

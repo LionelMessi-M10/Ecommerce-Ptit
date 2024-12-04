@@ -32,6 +32,22 @@ function App() {
   const [searchItems, setSearchItems] = useState([]);
   const [enableFilterTab, setEnableFilterTab] = useState(false);
   const [isOpenSearch, setOpenSearch] = useState(false);
+  const [isToggleSidebar, setIsToggleSidebar] = useState(false);
+  const [isHindSidebarAndHeader, setisHindSidebarAndHeader] = useState(false);
+  const [themeMode, setThemeMode] = useState(true);
+
+  useEffect(() => {
+    if (themeMode === true) {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+      localStorage.setItem('themeMode', 'light');
+    } else {
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
+      localStorage.setItem('themeMode', 'dark');
+    }
+
+  }, [themeMode])
 
   const [alertBox, setAlertBox] = useState({
     msg: "",
@@ -207,13 +223,19 @@ function App() {
     openSearch,
     closeSearch,
     isOpenSearch,
+    isToggleSidebar,
+    setIsToggleSidebar,
+    isHindSidebarAndHeader,
+    setisHindSidebarAndHeader,
+    themeMode,
+    setThemeMode
   };
 
   return (
     <BrowserRouter>
       <MyContext.Provider value={value}>
         <Routes>
-          <Route path="/ecommerce/*" element={<Ecommerce />} />
+          <Route path="/ecommerce/*" element={<Ecommerce/>} />
           <Route path="/admin/*" element={<AdminDashBoard />} />
         </Routes>
       </MyContext.Provider>

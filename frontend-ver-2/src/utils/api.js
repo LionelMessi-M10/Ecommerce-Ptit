@@ -12,7 +12,7 @@ const params = {
 
 export const fetchDataFromApi = async (url) => {
     try {
-        const { data } = await axios.get("https://ecommerce-server-node.onrender.com" + url, params)
+        const { data } = await axios.get("http://localhost:8080" + url, params)
         return data;
     } catch (error) {
         console.log(error);
@@ -21,10 +21,28 @@ export const fetchDataFromApi = async (url) => {
 }
 
 
+export const fetchDataById = async (url,id) => {
+    try {
+        const {data} = await axios.get("http://localhost:8080" + url + `/${id}`,params)
+        return data;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
 export const uploadImage = async (url, formData) => {
 
-    const { res } = await axios.post("https://ecommerce-server-node.onrender.com" + url, formData)
-    return res;
+    const  res = await axios.post("http://localhost:8080" + url, formData,{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+        }
+    })
+
+    const imageUrl = res.data;
+    console.log('Image uploaded successfully:', imageUrl);
+    return imageUrl;
 }
 
 export const login = async (url, formData) => {
@@ -57,7 +75,7 @@ export const login = async (url, formData) => {
 export const postData = async (url, formData) => {
 
     try {
-        const response = await fetch("https://ecommerce-server-node.onrender.com" + url, {
+        const response = await fetch("http://localhost:8080" + url, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`, // Include your API key in the Authorization header
@@ -66,9 +84,6 @@ export const postData = async (url, formData) => {
 
             body: JSON.stringify(formData)
         });
-
-
-
 
         if (response.ok) {
             const data = await response.json();
@@ -87,12 +102,12 @@ export const postData = async (url, formData) => {
 }
 
 export const editData = async (url, updatedData) => {
-    const { res } = await axios.put(`${"https://ecommerce-server-node.onrender.com"}${url}`, updatedData)
-    return res;
+    const response = await axios.put(`${"http://localhost:8080"}${url}`, updatedData,params)
+    return response.data;
 }
 
 export const deleteData = async (url) => {
-    const { res } = await axios.delete(`${"https://ecommerce-server-node.onrender.com"}${url}`, params)
+    const { res } = await axios.delete(`${"http://localhost:8080"}${url}`, params)
     return res;
 }
 

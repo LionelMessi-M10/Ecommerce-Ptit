@@ -188,55 +188,56 @@ const Home = (props) => {
                         <div className='col-md-9'>
                             <Slider {...settings} className='prodSlider'>
 
-                                {
-                                    featuredProducts?.length !== 0 && featuredProducts?.slice(0)
-                                        ?.reverse()
-                                        ?.map((item, index) => {
-                                            return (
-                                                <div className="item" key={index}>
-                                                    <Product item={item}/>
-                                                </div>
-                                            );
-                                        })
-                                }
+                                {/*{   */}
+                                {/*    */}
+                                {/*    featuredProducts?.length !== 0 && featuredProducts?.slice(0)*/}
+                                {/*        ?.reverse()*/}
+                                {/*        ?.map((item, index) => {*/}
+                                {/*            return (*/}
+                                {/*                <div className="item" key={index}>*/}
+                                {/*                    <Product item={item}/>*/}
+                                {/*                </div>*/}
+                                {/*            );*/}
+                                {/*        })*/}
+                                {/*}*/}
 
                             </Slider>
                         </div>
 
                         <div className='col-md-3 pr-5 res-hide'>
-                            {homeSideBanners?.length !== 0 &&
-                                homeSideBanners?.map((item, index) => {
-                                    if (index === 1) {
-                                        return (
-                                            <div className="banner mb-3" key={index}>
-                                                {item?.subCatId !== null ? (
-                                                    <Link
-                                                        to={`/products/subCat/${item?.subCatId}`}
-                                                        className="box"
-                                                    >
-                                                        <img
-                                                            src={item?.images[0]}
-                                                            className="w-100 transition"
-                                                            alt="banner img"
-                                                        />
-                                                    </Link>
-                                                ) : (
-                                                    <Link
-                                                        to={`/products/category/${item?.catId}`}
-                                                        className="box"
-                                                    >
-                                                        <img
-                                                            src={item?.images[0]}
-                                                            className="cursor w-100 transition"
-                                                            alt="banner img"
-                                                        />
-                                                    </Link>
-                                                )}
-                                            </div>
-                                        );
-                                    }
+                            {/*{homeSideBanners?.length !== 0 &&*/}
+                            {/*    homeSideBanners?.map((item, index) => {*/}
+                            {/*        if (index === 1) {*/}
+                            {/*            return (*/}
+                            {/*                <div className="banner mb-3" key={index}>*/}
+                            {/*                    {item?.subCatId !== null ? (*/}
+                            {/*                        <Link*/}
+                            {/*                            to={`/products/subCat/${item?.subCatId}`}*/}
+                            {/*                            className="box"*/}
+                            {/*                        >*/}
+                            {/*                            <img*/}
+                            {/*                                src={item?.images[0]}*/}
+                            {/*                                className="w-100 transition"*/}
+                            {/*                                alt="banner img"*/}
+                            {/*                            />*/}
+                            {/*                        </Link>*/}
+                            {/*                    ) : (*/}
+                            {/*                        <Link*/}
+                            {/*                            to={`/products/category/${item?.catId}`}*/}
+                            {/*                            className="box"*/}
+                            {/*                        >*/}
+                            {/*                            <img*/}
+                            {/*                                src={item?.images[0]}*/}
+                            {/*                                className="cursor w-100 transition"*/}
+                            {/*                                alt="banner img"*/}
+                            {/*                            />*/}
+                            {/*                        </Link>*/}
+                            {/*                    )}*/}
+                            {/*                </div>*/}
+                            {/*            );*/}
+                            {/*        }*/}
 
-                                })}
+                            {/*    })}*/}
                         </div>
 
 

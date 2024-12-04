@@ -85,7 +85,7 @@ const Header = (props) => {
         context.setIsLogin(false);
         localStorage.removeItem("user");
         localStorage.removeItem("token");
-        history("/signIn");
+        history("/ecommerce/signIn");
     };
 
     const searchProducts = (e) => {
@@ -273,7 +273,7 @@ const Header = (props) => {
                                                             </li>
                                                             {role === "ROLE_ADMIN" ? (
                                                                 <li>
-                                                                    <Link to={"/dashboard"}>
+                                                                    <Link to={"/admin"}>
                                                                     <Button >
                                                                         <LogoutOutlinedIcon/> Admin Dashboard
                                                                     </Button>

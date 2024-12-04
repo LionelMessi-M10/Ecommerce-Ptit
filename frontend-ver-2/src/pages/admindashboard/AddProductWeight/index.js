@@ -4,10 +4,11 @@ import Chip from "@mui/material/Chip";
 import { emphasize, styled } from "@mui/material/styles";
 
 import Button from '@mui/material/Button';
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import {fetchDataFromApi, postData} from "../../../utils/api";
 
 
 const StyledBreadcumb = styled(Chip)(({ theme }) => {
@@ -34,6 +35,35 @@ const StyledBreadcumb = styled(Chip)(({ theme }) => {
 
 
 const AddProductWeight = () => {
+
+    const [weight,setWeight] = useState([]);
+    const [newWeight, setNewWeight] = useState('');
+
+    const getAllWeight = async () => {
+        const response = await fetchDataFromApi("/seller/productWeight")
+        setWeight(response);
+    }
+
+    const addWeight = async () => {
+        if (!newWeight.trim()) {
+            alert("Please enter a valid Weight value.");
+            return;
+        }
+
+        const response = await postData("/seller/createProductWeight", { weight: newWeight });
+        if (response.id) {
+            setNewWeight("");
+            getAllWeight();
+        } else {
+            alert("Failed to add RAM. Please try again.");
+        }
+    };
+
+    useEffect(() => {
+        getAllWeight();
+    },[])
+
+    console.log("weight",weight);
     return (
         <>
             <div className="right-content w-100">
@@ -66,9 +96,14 @@ const AddProductWeight = () => {
                             <div className="card p-4">
                                 <div className="form-group">
                                     <h6>PRODUCT WEIGHT</h6>
-                                    <input type="text" />
+                                    <input
+                                        type="text"
+                                        value={newWeight}
+                                        onChange={(e) => setNewWeight(e.target.value)}
+                                        placeholder="Enter Weight  (e.g., 1KG)"
+                                    />
                                 </div>
-                                <Button className="btn-lg btn-blue btn-big">Add Weight</Button>
+                                <Button className="btn-lg btn-blue btn-big" onClick={addWeight}>Add Weight</Button>
                             </div>
                         </div>
                     </div>
@@ -88,60 +123,23 @@ const AddProductWeight = () => {
                                     </thead>
 
                                     <tbody>
+                                    {weight.length > 0 ? (
+                                        weight.map((item, index) => (
+                                            <tr key={index}>
+                                                <td>{item.weight}</td>
+                                                <td>
+                                                    <div className="actions d-flex align-items-center">
+                                                        <Button className="success" color="success"><FaPencilAlt /></Button>
+                                                        <Button className="error" color="error"><MdDelete /></Button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
                                         <tr>
-                                            <td>4GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
+                                            <td colSpan="2" className="text-center">No Weights available</td>
                                         </tr>
-                                        <tr>
-                                            <td>6GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>12GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>16GB</td>
-                                            <td>
-                                                <div className="actions d-flex align-items-center">
-                                                    <Button className="success" color="success"><FaPencilAlt /></Button>
-                                                    <Button className="error" color="error"><MdDelete /></Button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                    )}
                                     </tbody>
                                 </table>
                             </div>

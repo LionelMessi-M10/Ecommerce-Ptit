@@ -9,6 +9,11 @@ import { emphasize, styled } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import { FaCloudUploadAlt, FaTrashAlt } from "react-icons/fa";
 import './addUser.css';
+import {postData, uploadImage} from "../../../utils/api";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import {InputLabel} from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 
 
 
@@ -44,6 +49,17 @@ const AddUser = () => {
     const [productSizeVal, setProductSizeVal] = useState('');
     const [productLocationVal, setProductLocationVal] = useState('');
     const [ratingsValue, setRatingValue] = useState(1);
+    const [username, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [telephone, setTelephone] = useState('');
+    const [role, setRole] = useState('');
+
+    const roles = [
+        { id: '1', role_code: 'ROLE_ADMIN', role_name: 'Administrator' },
+        { id: '2', role_code: 'ROLE_CUSTOMER', role_name: 'Customer' },
+        { id: '3', role_code: 'ROLE_SELLER', role_name: 'Seller' },
+    ];
+
     const fileInputRef = useRef();
 
     const handleChangeCategory = (event) => {
@@ -88,6 +104,43 @@ const AddUser = () => {
         fileInputRef.current.click();
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("image",selectedImages[0])
+        const imageUrl = await uploadImage("/admin/uploadImage",formData);
+
+        const userData = {
+            userName: username,
+            email: email,
+            telephone: telephone,
+            password: 'testpass2024',
+            roleId:role,
+            image:imageUrl,
+        };
+
+        try {
+            // Gửi dữ liệu lên API
+            const response = await postData("/admin/create",userData)
+            console.log("response", response);
+            if (response.id) {
+                alert('User added successfully');
+                // Reset form sau khi thêm thành công
+                setUserName('');
+                setEmail('');
+                setTelephone('');
+                setRole('');
+                setSelectedImages([]);
+            } else {
+                alert('Failed to add user');
+            }
+        } catch (error) {
+            console.error('Error adding user:', error);
+            alert('An error occurred while adding the user');
+        }
+    };
+    console.log("selected File: ",selectedImages)
     return (
         <>
             <div className="right-content w-100">
@@ -115,7 +168,7 @@ const AddUser = () => {
                     </Breadcrumbs>
                 </div>
 
-                <form className="form">
+                <form className="form" onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-sm-12">
                             <div className="card p-4">
@@ -126,14 +179,24 @@ const AddUser = () => {
                                     <div className="col">
                                         <div className="form-group">
                                             <h6>NAME</h6>
-                                            <input type="text" className="upload-info" />
+                                            <input
+                                                type="text"
+                                                className="upload-info"
+                                                value={username}
+                                                onChange={(e) => setUserName(e.target.value)}
+                                            />
                                         </div>
                                     </div>
 
                                     <div className="col">
                                         <div className="form-group">
                                             <h6>EMAIL</h6>
-                                            <input type="text" className="upload-info" />
+                                            <input
+                                                type="email"
+                                                className="upload-info"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -143,24 +206,35 @@ const AddUser = () => {
                                     <div className="col">
                                         <div className="form-group">
                                             <h6>TELEPHONE</h6>
-                                            <input type="text" className="upload-info" />
+                                            <input
+                                                type="text"
+                                                className="upload-info"
+                                                value={telephone}
+                                                onChange={(e) => setTelephone(e.target.value)}
+                                            />
                                         </div>
                                     </div>
 
                                     <div className="col">
                                         <div className="form-group">
-                                            <h6>ADDRESS</h6>
-                                            <input type="text" className="upload-info" />
+                                            <h6>ROLE</h6>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="role-label">Role</InputLabel>
+                                                <Select
+                                                    labelId="role-label"
+                                                    value={role}
+                                                    onChange={(e) => setRole(e.target.value)}
+                                                    label="Role"
+                                                >
+                                                    {roles.map((roleItem) => (
+                                                        <MenuItem key={roleItem.id} value={roleItem.id}>
+                                                            {roleItem.role_name}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Select>
+                                            </FormControl>
                                         </div>
                                     </div>
-                                    
-                                    <div className="col">
-                                        <div className="form-group">
-                                            <h6>SET ENABLE</h6>
-                                            <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                                        </div>
-                                    </div>
-
                                 </div>
 
                                 <br />
@@ -186,7 +260,7 @@ const AddUser = () => {
                                     </div>
                                 </div>
 
-                                <Button className="btn-blue btn-lg btn-big"><FaCloudUploadAlt />
+                                <Button className="btn-blue btn-lg btn-big" type={"submit"} ><FaCloudUploadAlt />
                                     &nbsp; ADD NEW USER</Button>
                             </div>
                         </div>
