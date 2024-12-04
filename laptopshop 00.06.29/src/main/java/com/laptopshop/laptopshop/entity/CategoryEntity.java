@@ -1,6 +1,7 @@
 package com.laptopshop.laptopshop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,5 +37,6 @@ public class CategoryEntity extends BaseEntity {
             cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             orphanRemoval = true
     )
+    @JsonManagedReference
     private List<BrandEntity> brandEntities = new ArrayList<>();
 }

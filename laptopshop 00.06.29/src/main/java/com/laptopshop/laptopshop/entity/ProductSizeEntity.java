@@ -1,5 +1,6 @@
 package com.laptopshop.laptopshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +22,6 @@ public class ProductSizeEntity extends BaseEntity {
     private String screenSize;
 
     @OneToMany(mappedBy = "productSizeEntity", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @JsonBackReference
     private List<ProductEntity> productEntities = new ArrayList<>();
 }

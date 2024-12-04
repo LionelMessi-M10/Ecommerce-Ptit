@@ -91,10 +91,12 @@ public class ProductEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_size_id")
+    @JsonManagedReference
     private ProductSizeEntity productSizeEntity;
 
     @ManyToOne
     @JoinColumn(name = "product_weight_id")
+    @JsonManagedReference
     private ProductWeightEntity productWeightEntity;
 
     @ManyToOne

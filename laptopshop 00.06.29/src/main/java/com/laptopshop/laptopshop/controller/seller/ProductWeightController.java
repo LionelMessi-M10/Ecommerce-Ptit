@@ -21,7 +21,7 @@ public class ProductWeightController {
         this.productWeightService = productWeightService;
     }
 
-    @GetMapping("productWeight")
+    @GetMapping("/productWeight")
     public List<ProductWeightEntity> getAllProductWeights() {
         return productWeightService.getAllProductWeights();
     }
