@@ -1,7 +1,9 @@
 package com.laptopshop.laptopshop.controller.seller;
 
+import com.laptopshop.laptopshop.constant.Constant;
 import com.laptopshop.laptopshop.entity.ProductWeightEntity;
 import com.laptopshop.laptopshop.models.dto.ProductWeightDTO;
+import com.laptopshop.laptopshop.models.response.CoreResponse;
 import com.laptopshop.laptopshop.service.IProductWeightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,31 +24,75 @@ public class ProductWeightController {
     }
 
     @GetMapping("/productWeight")
-    public List<ProductWeightEntity> getAllProductWeights() {
-        return productWeightService.getAllProductWeights();
+    public ResponseEntity<CoreResponse> getAllProductWeights() {
+        List<ProductWeightEntity> productWeights = productWeightService.getAllProductWeights();
+        CoreResponse response = new CoreResponse()
+                .setCode(Constant.SUCCESS)
+                .setMessage(Constant.SUCCESS_MESSAGE)
+                .setData(productWeights)
+                .setPageNumber(1)
+                .setPageSize(productWeights.size())
+                .setTotalElements(productWeights.size())
+                .setTotalPages(1);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/productWeight/{id}")
-    public ResponseEntity<ProductWeightEntity> getProductWeightById(@PathVariable Long id) {
+    public ResponseEntity<CoreResponse> getProductWeightById(@PathVariable Long id) {
         Optional<ProductWeightEntity> productWeightEntity = productWeightService.getProductWeightById(id);
-        return productWeightEntity.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        CoreResponse response = new CoreResponse();
+        if (productWeightEntity.isPresent()) {
+            response.setCode(Constant.SUCCESS)
+                    .setMessage(Constant.SUCCESS_MESSAGE)
+                    .setData(productWeightEntity.get());
+            return ResponseEntity.ok(response);
+        } else {
+            response.setCode(Constant.NOT_FOUND)
+                    .setMessage(Constant.NOT_FOUND_MESSAGE);
+            return ResponseEntity.status(Constant.NOT_FOUND).body(response);
+        }
     }
 
     @PostMapping("/createProductWeight")
-    public ResponseEntity<ProductWeightEntity> createProductWeight(@RequestBody ProductWeightDTO productWeightDTO) {
+    public ResponseEntity<CoreResponse> createProductWeight(@RequestBody ProductWeightDTO productWeightDTO) {
         ProductWeightEntity createdProductWeight = productWeightService.createProductWeight(productWeightDTO);
-        return ResponseEntity.status(201).body(createdProductWeight);
+        CoreResponse response = new CoreResponse()
+                .setCode(Constant.SUCCESS)
+                .setMessage(Constant.SUCCESS_MESSAGE)
+                .setData(createdProductWeight);
+
+        return ResponseEntity.status(Constant.SUCCESS).body(response);
     }
 
     @PutMapping("/updateProductWeight/{id}")
-    public ResponseEntity<ProductWeightEntity> updateProductWeight(@PathVariable Long id, @RequestBody ProductWeightDTO productWeightDTO) {
+    public ResponseEntity<CoreResponse> updateProductWeight(@PathVariable Long id, @RequestBody ProductWeightDTO productWeightDTO) {
         ProductWeightEntity updatedProductWeight = productWeightService.updateProductWeight(id, productWeightDTO);
-        return updatedProductWeight != null ? ResponseEntity.ok(updatedProductWeight) : ResponseEntity.notFound().build();
+        CoreResponse response = new CoreResponse();
+        if (updatedProductWeight != null) {
+            response.setCode(Constant.SUCCESS)
+                    .setMessage(Constant.SUCCESS_MESSAGE)
+                    .setData(updatedProductWeight);
+            return ResponseEntity.ok(response);
+        } else {
+            response.setCode(Constant.NOT_FOUND)
+                    .setMessage(Constant.NOT_FOUND_MESSAGE);
+            return ResponseEntity.status(Constant.NOT_FOUND).body(response);
+        }
     }
 
     @DeleteMapping("/deleteProductWeight/{id}")
-    public ResponseEntity<Void> deleteProductWeight(@PathVariable Long id) {
+    public ResponseEntity<CoreResponse> deleteProductWeight(@PathVariable Long id) {
         boolean isDeleted = productWeightService.deleteProductWeight(id);
-        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        CoreResponse response = new CoreResponse();
+        if (isDeleted) {
+            response.setCode(Constant.NO_CONTENT)
+                    .setMessage(Constant.NO_CONTENT_MESSAGE);
+            return ResponseEntity.status(Constant.NO_CONTENT).body(response);
+        } else {
+            response.setCode(Constant.NOT_FOUND)
+                    .setMessage(Constant.NOT_FOUND_MESSAGE);
+            return ResponseEntity.status(Constant.NOT_FOUND).body(response);
+        }
     }
 }
