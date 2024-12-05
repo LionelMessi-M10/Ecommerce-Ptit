@@ -21,7 +21,7 @@ public class ProductSizeController {
         this.productSizeService = productSizeService;
     }
 
-    @GetMapping("productSize")
+    @GetMapping("/productSize")
     public List<ProductSizeEntity> getAllProductSizes() {
         return productSizeService.getAllProductSizes();
     }

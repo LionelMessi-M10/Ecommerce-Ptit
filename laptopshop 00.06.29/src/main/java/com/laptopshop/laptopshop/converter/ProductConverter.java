@@ -40,8 +40,21 @@ public class ProductConverter {
         productEntity.setPrice(productDTO.getPrice());
         productEntity.setDiscount(productDTO.getDiscount());
         productEntity.setStock(productDTO.getStock());
+        productEntity.setEnabled(productDTO.getEnabled());
         productEntity.setDescription(productDTO.getDescription());
         productEntity.setLocation(productDTO.getLocation());
+
+        // Chuyển đổi danh sách đường dẫn hình ảnh thành danh sách ImageProductEntity mà không thay đổi lớp ImageProductEntity
+        List<ImageProductEntity> imageProductEntities = productDTO.getImageProductPath().stream()
+                .map(path -> {
+                    ImageProductEntity imageProductEntity = new ImageProductEntity();
+                    imageProductEntity.setImage(path);  // Gán đường dẫn hình ảnh vào trường "image"
+                    imageProductEntity.setProductEntity(productEntity);  // Gán liên kết với sản phẩm hiện tại
+                    return imageProductEntity;
+                })
+                .collect(Collectors.toList());
+
+        productEntity.setImageProductEntities(imageProductEntities);
 
         // Set related entities based on DTO
         if (productDTO.getProductSizeId() != null) {
@@ -81,6 +94,7 @@ public class ProductConverter {
                 .setPrice(productEntity.getPrice())
                 .setDiscount(productEntity.getDiscount())
                 .setStock(productEntity.getStock())
+                .setEnabled(productEntity.getEnabled())
                 .setDescription(productEntity.getDescription())
                 .setLocation(productEntity.getLocation());
 
@@ -109,17 +123,19 @@ public class ProductConverter {
             productResponse.setBrandProduct(productEntity.getBrandEntity().getBrandName());
         }
 
+        // Xử lý ImageProductEntities và chuyển đổi danh sách hình ảnh
         List<String> images = new ArrayList<>();
-        // Safely check if ImageProductEntities is not null
         if (productEntity.getImageProductEntities() != null) {
+            // Chuyển đổi từng imageProductEntity thành đường dẫn ảnh
             for (ImageProductEntity item : productEntity.getImageProductEntities()) {
-                if (item.getImage() != null) {
+                if (item.getImage() != null && !item.getImage().isEmpty()) {
                     images.add(item.getImage());
                 }
             }
         }
-        productResponse.setImageProductPaths(images);
+        productResponse.setImageProductPaths(images); // Gán danh sách ảnh vào response
 
         return productResponse;
     }
+
 }

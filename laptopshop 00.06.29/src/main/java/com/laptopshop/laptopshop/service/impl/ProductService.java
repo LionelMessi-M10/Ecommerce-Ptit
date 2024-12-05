@@ -12,6 +12,7 @@ import com.laptopshop.laptopshop.service.IProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,20 @@ public class ProductService implements IProductService {
     public List<ProductResponse> getAllProducts() {
         List<ProductEntity> products = productRepository.findAll();
         return products.stream().map(productConverter::convertToResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<ProductResponse> getAllProductsPages(Pageable pageable) {
+        // Lấy danh sách sản phẩm từ repository, phân trang theo Pageable
+        Page<ProductEntity> productEntities = productRepository.findAll(pageable);
+
+        // Chuyển đổi ProductEntity sang ProductResponse
+        List<ProductResponse> productResponses = productEntities.getContent().stream()
+                .map(productConverter::convertToResponse)
+                .collect(Collectors.toList());
+
+        // Trả về Page chứa danh sách ProductResponse
+        return new PageImpl<>(productResponses, pageable, productEntities.getTotalElements());
     }
 
     @Override

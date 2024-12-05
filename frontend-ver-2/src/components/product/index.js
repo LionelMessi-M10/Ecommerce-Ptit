@@ -8,7 +8,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CompareArrowsOutlinedIcon from "@mui/icons-material/CompareArrowsOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import { IoIosImages } from "react-icons/io";
 import { MyContext } from "../../App";
 import { fetchDataFromApi, postData } from "../../utils/api";
@@ -25,13 +25,11 @@ const Product = (props) => {
     setProductData(props.item);
   }, [props.item]);
 
-  
   useEffect(() => {
     setTimeout(() => {
-        setIsLoading(false);
+      setIsLoading(false);
     }, 500);
-}, []);
-
+  }, []);
 
   const addToMyList = (product) => {
     if (context?.isLogin === true) {
@@ -83,8 +81,7 @@ const Product = (props) => {
   return (
     <div
       className="productThumb"
-      onMouseEnter={() => handleMouseEnter(productData?.id)}
-    >
+      onMouseEnter={() => handleMouseEnter(productData?.id)}>
       {
         // props.tag !== null && props.tag !== undefined &&
         // <span className={`badge ${props.tag}`}>{props.tag}</span>
@@ -95,18 +92,13 @@ const Product = (props) => {
           <div className="imgWrapper">
             <Link to={`/product/${productData.id}`}>
               <div className="wrapper mb-3">
-              {
-                            isLoading === true ?
-                                <Skeleton variant="rectangular" width={300} height={400}>
-                                    <IoIosImages/>
-                                </Skeleton>
-
-                                :
-
-                                <img src={productData?.images[0]} className="w-100" />
-                        }
-
-                
+                {isLoading === true ? (
+                  <Skeleton variant="rectangular" width={300} height={400}>
+                    <IoIosImages />
+                  </Skeleton>
+                ) : (
+                  <img src={productData?.images[0]} className="w-100" />
+                )}
               </div>
 
               <div className="overlay transition"></div>
@@ -121,8 +113,7 @@ const Product = (props) => {
                     addedInMyList === true
                       ? "Added in Wishlist"
                       : "Add to Wishlist"
-                  }`}
-                >
+                  }`}>
                   {addedInMyList === true ? (
                     <FavoriteIcon />
                   ) : (
@@ -135,8 +126,7 @@ const Product = (props) => {
                 <Link
                   to={`/product/${productData.id}`}
                   className="cursor"
-                  tooltip="Quick View"
-                >
+                  tooltip="Quick View">
                   <RemoveRedEyeOutlinedIcon />
                 </Link>
               </li>

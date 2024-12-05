@@ -21,6 +21,7 @@ public class ProductResponse {
     private String ram;
     private String description;
     private String location;
+    private Short enabled;
     private List<String> imageProductPaths;
     private String colorProduct;
     private String brandProduct;

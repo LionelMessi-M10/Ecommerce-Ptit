@@ -11,4 +11,8 @@ public class CoreResponse {
     private int code;
     private String message;
     public Object data;
+    private int pageNumber;
+    private int pageSize;
+    private long totalElements;
+    private int totalPages;
 }
