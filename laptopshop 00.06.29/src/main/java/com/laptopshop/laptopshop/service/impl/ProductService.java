@@ -9,7 +9,7 @@ import com.laptopshop.laptopshop.models.request.ProductSearchRequest;
 import com.laptopshop.laptopshop.models.response.ProductResponse;
 import com.laptopshop.laptopshop.repository.*;
 import com.laptopshop.laptopshop.service.IProductService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -56,7 +56,7 @@ public class ProductService implements IProductService {
     public Page<ProductResponse> getProductPage(ProductSearchRequest productSearchRequest) {
         Pageable pageable = PageRequest.of(productSearchRequest.getPage() - 1, productSearchRequest.getSize());
 
-        Page<ProductEntity> productEntityPage = productRepository.searchProducts(productSearchRequest.getKeyword(), productSearchRequest.getPriceFrom(), productSearchRequest.getPriceTo(), productSearchRequest.getRating(), productSearchRequest.getCategoryId(), pageable);
+        Page<ProductEntity> productEntityPage = productRepository.searchProducts(productSearchRequest.getKeyword(), productSearchRequest.getLocation(),  productSearchRequest.getPriceFrom(), productSearchRequest.getPriceTo(), productSearchRequest.getRating(), productSearchRequest.getCategoryId(), pageable);
 
         return productEntityPage.map(productConverter::convertToResponse);
     }
@@ -158,4 +158,27 @@ public class ProductService implements IProductService {
 
         return productEntities.stream().map(productConverter::convertToResponse).collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProductResponse> searchProducts(ProductSearchRequest searchRequest, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Lấy danh sách sản phẩm từ repository
+        Page<ProductEntity> productEntities = productRepository.searchProducts(
+                searchRequest.getKeyword(),
+                searchRequest.getLocation(),
+                searchRequest.getPriceFrom(),
+                searchRequest.getPriceTo(),
+                searchRequest.getRating(),
+                searchRequest.getCategoryId(),
+                pageable
+        );
+
+        // Chuyển đổi danh sách ProductEntity thành ProductResponse
+        Page<ProductResponse> productResponses = productEntities.map(productEntity -> new ProductResponse(productEntity));
+
+        return productResponses;
+    }
+
 }

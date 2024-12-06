@@ -29,7 +29,6 @@ public class ShopController {
 
     @GetMapping(value = {"", "/"})
     public ResponseEntity<CoreResponse> getProductPage(@RequestBody(required = false) ProductSearchRequest productSearchRequest) {
-
         CoreResponse coreResponse = new CoreResponse()
                 .setCode(Constant.SUCCESS)
                 .setMessage(Constant.SUCCESS_MESSAGE)
@@ -57,5 +56,6 @@ public class ShopController {
 
         return ResponseEntity.ok(coreResponse);
     }
+
 
 }

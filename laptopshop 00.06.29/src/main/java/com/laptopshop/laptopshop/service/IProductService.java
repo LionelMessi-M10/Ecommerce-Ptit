@@ -25,4 +25,7 @@ public interface IProductService {
 
     List<ProductResponse> getRelatedProduct(Long id);
 
+    Page<ProductResponse> searchProducts(ProductSearchRequest searchRequest, int pageNo, int pageSize);
+
+
 }

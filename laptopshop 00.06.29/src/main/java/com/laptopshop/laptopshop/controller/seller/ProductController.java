@@ -2,6 +2,7 @@ package com.laptopshop.laptopshop.controller.seller;
 
 import com.laptopshop.laptopshop.constant.Constant;
 import com.laptopshop.laptopshop.models.dto.ProductDTO;
+import com.laptopshop.laptopshop.models.request.ProductSearchRequest;
 import com.laptopshop.laptopshop.models.response.CoreResponse;
 import com.laptopshop.laptopshop.models.response.ProductResponse;
 import com.laptopshop.laptopshop.service.IProductService;
@@ -95,6 +96,7 @@ public class ProductController {
 
         return ResponseEntity.ok(coreResponse);
     }
+
 
 
 

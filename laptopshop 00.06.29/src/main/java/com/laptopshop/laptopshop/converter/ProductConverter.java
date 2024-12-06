@@ -86,54 +86,39 @@ public class ProductConverter {
     }
 
     public ProductResponse convertToResponse(ProductEntity productEntity) {
-        ProductResponse productResponse = new ProductResponse()
-                .setId(productEntity.getId())
-                .setProductName(productEntity.getProductName())
-                .setThumbnail(productEntity.getThumbnail())
-                .setOldPrice(productEntity.getOldPrice())
-                .setPrice(productEntity.getPrice())
-                .setDiscount(productEntity.getDiscount())
-                .setStock(productEntity.getStock())
-                .setEnabled(productEntity.getEnabled())
-                .setDescription(productEntity.getDescription())
-                .setLocation(productEntity.getLocation());
+        // Thay vì dùng constructor mặc định, hãy dùng constructor có tham số (ProductEntity)
+        ProductResponse productResponse = new ProductResponse(productEntity);
 
-        // Safely check if ProductSizeEntity is not null
+        // Thiết lập các thuộc tính từ ProductEntity cho ProductResponse
         if (productEntity.getProductSizeEntity() != null) {
             productResponse.setProductSize(productEntity.getProductSizeEntity().getScreenSize());
         }
 
-        // Safely check if ProductWeightEntity is not null
         if (productEntity.getProductWeightEntity() != null) {
             productResponse.setWeight(productEntity.getProductWeightEntity().getWeight());
         }
 
-        // Safely check if RamEntity is not null
         if (productEntity.getRamEntity() != null) {
             productResponse.setRam(productEntity.getRamEntity().getRam());
         }
 
-        // Safely check if ColorEntity is not null
         if (productEntity.getColorEntity() != null) {
             productResponse.setColorProduct(productEntity.getColorEntity().getColorName());
         }
 
-        // Safely check if BrandEntity is not null
         if (productEntity.getBrandEntity() != null) {
             productResponse.setBrandProduct(productEntity.getBrandEntity().getBrandName());
         }
 
-        // Xử lý ImageProductEntities và chuyển đổi danh sách hình ảnh
         List<String> images = new ArrayList<>();
         if (productEntity.getImageProductEntities() != null) {
-            // Chuyển đổi từng imageProductEntity thành đường dẫn ảnh
             for (ImageProductEntity item : productEntity.getImageProductEntities()) {
                 if (item.getImage() != null && !item.getImage().isEmpty()) {
                     images.add(item.getImage());
                 }
             }
         }
-        productResponse.setImageProductPaths(images); // Gán danh sách ảnh vào response
+        productResponse.setImageProductPaths(images);
 
         return productResponse;
     }

@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
-import Banner1 from "../../assets/images/banner1.jpg";
-import Banner2 from "../../assets/images/banner2.jpg";
-import Banner3 from "../../assets/images/banner3.jpg";
 import Slider from "react-slick";
-import "./style.css";
 import { MyContext } from "../../App";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 const Banners = (props) => {
   const context = useContext(MyContext);
@@ -20,38 +17,52 @@ const Banners = (props) => {
     arrows: context.windowWidth < 992 ? false : true,
   };
 
+  const imgSlider = [
+    {
+      image:
+        "https://res.cloudinary.com/dkgonwhvj/image/upload/v1731427522/1731427519864_New_Project_11.jpg",
+      subCatId: 1,
+      catId: 101,
+    },
+    {
+      image:
+        "https://res.cloudinary.com/dkgonwhvj/image/upload/v1731427470/1731427468095_New_Project_13.jpg",
+      subCatId: null,
+      catId: 102,
+    },
+  ];
+
   return (
     <div className="bannerSection">
       <div className="container-fluid">
-        <Slider {...settings} className="prodSlider">
-          {props?.data?.length !== 0 &&
-            props?.data?.map((item, index) => {
+        <Slider className="prodSlider" {...settings}>
+          {imgSlider.length > 0 &&
+            imgSlider.map((item, index) => {
               return (
-                <div className={`box`} key={index}>
-                {item?.subCatId !== null ? (
-                  <Link
-                    to={`/products/subCat/${item?.subCatId}`}
-                    className="box"
-                  >
-                    <img
-                      src={item?.images[0]}
-                      className="w-100 transition"
-                      alt="banner img"
-                    />
-                  </Link>
-                ) : (
-                  <Link
-                    to={`/products/category/${item?.catId}`}
-                    className="box"
-                  >
-                    <img
-                      src={item?.images[0]}
-                      className="w-100 transition"
-                      alt="banner img"
-                    />
-                  </Link>
-                )}
-              </div>
+                <div className="box" key={index}>
+                  {/* Kiểm tra subCatId để điều hướng đúng */}
+                  {item.subCatId !== null ? (
+                    <Link
+                      to={`/products/subCat/${item.subCatId}`}
+                      className="box">
+                      <img
+                        src={item.image}
+                        className="w-100 transition"
+                        alt="banner img"
+                      />
+                    </Link>
+                  ) : (
+                    <Link
+                      to={`/products/category/${item.catId}`}
+                      className="box">
+                      <img
+                        src={item.image}
+                        className="w-100 transition"
+                        alt="banner img"
+                      />
+                    </Link>
+                  )}
+                </div>
               );
             })}
         </Slider>

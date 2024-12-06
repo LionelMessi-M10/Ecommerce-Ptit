@@ -20,32 +20,38 @@ const HomeSlider = (props) => {
     autoplay: true,
   };
 
+  const imgSlider = [
+    {
+      image:
+        "https://res.cloudinary.com/dkgonwhvj/image/upload/v1731427522/1731427519864_New_Project_11.jpg",
+    },
+    {
+      image:
+        "https://res.cloudinary.com/dkgonwhvj/image/upload/v1731427470/1731427468095_New_Project_13.jpg",
+    },
+    {
+      images:
+        "https://res.cloudinary.com/dkgonwhvj/image/upload/v1731427548/1731427544379_New_Project_6.jpg",
+    },
+    {
+      image:
+        "https://res.cloudinary.com/dkgonwhvj/image/upload/v1731427470/1731427468095_New_Project_13.jpg",
+    },
+  ];
+
   return (
     <section className="homeSlider">
       <div className="container-fluid position-relative">
-        <Slider {...settings} className="home_slider_Main">
-          {props?.data.length !== 0 &&
-            props?.data?.map((item, index) => {
+        <Slider className="home_slider_Main" {...settings}>
+          {imgSlider.length !== 0 &&
+            imgSlider.map((item, index) => {
               return (
                 <div className="item" key={index}>
-                <img src={item?.images[0]} className="w-100"/>
-              
-                 {
-                //     <div className="info">
-                //     <h2 class="mb-4">
-                //       Don’t miss amazing
-                //       <br />
-                //       grocery deals
-                //     </h2>
-                //     <p>Sign up for the daily newsletter</p>
-                //   </div>
-                 }
+                  <img src={item.image} className="w-100" />
                 </div>
               );
             })}
         </Slider>
-
-      
       </div>
     </section>
   );
