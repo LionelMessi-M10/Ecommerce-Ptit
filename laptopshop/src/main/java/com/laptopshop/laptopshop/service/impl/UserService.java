@@ -1,5 +1,15 @@
 package com.laptopshop.laptopshop.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.laptopshop.laptopshop.entity.RoleEntity;
 import com.laptopshop.laptopshop.entity.UserEntity;
 import com.laptopshop.laptopshop.exception.DataNotFoundException;
@@ -9,17 +19,8 @@ import com.laptopshop.laptopshop.repository.RoleRepository;
 import com.laptopshop.laptopshop.repository.UserRepository;
 import com.laptopshop.laptopshop.service.IUserService;
 import com.laptopshop.laptopshop.utils.JwtUtil;
-import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service

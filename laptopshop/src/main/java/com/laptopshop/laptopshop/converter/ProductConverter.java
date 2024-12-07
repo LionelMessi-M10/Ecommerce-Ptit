@@ -1,22 +1,17 @@
 package com.laptopshop.laptopshop.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.laptopshop.laptopshop.entity.ImageProductEntity;
 import com.laptopshop.laptopshop.entity.ProductEntity;
 import com.laptopshop.laptopshop.models.dto.ProductDTO;
 import com.laptopshop.laptopshop.models.response.ProductResponse;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class ProductConverter {
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     public ProductEntity convertToEntity(ProductDTO productDTO) {
         return null;
