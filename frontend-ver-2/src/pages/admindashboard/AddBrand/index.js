@@ -75,7 +75,7 @@ const AddBrand = () => {
                                     <div className="col">
                                         <div className="form-group">
                                             <h6>Brand Name</h6>
-                                            <input type="text" style={{height:'58px'}}/>
+                                            <input type="text" style={{height:'58px !important;'}}/>
                                         </div>
                                     </div>
                                     <div className="col">

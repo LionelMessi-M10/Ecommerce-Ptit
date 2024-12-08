@@ -1,17 +1,13 @@
 package com.laptopshop.laptopshop.models.response;
 
-import com.laptopshop.laptopshop.entity.ProductEntity;
-import com.laptopshop.laptopshop.entity.ImageProductEntity;
-import com.laptopshop.laptopshop.entity.ColorEntity;
-import com.laptopshop.laptopshop.entity.BrandEntity;
-import com.laptopshop.laptopshop.entity.ProductSizeEntity;
-import com.laptopshop.laptopshop.entity.ProductWeightEntity;
-import com.laptopshop.laptopshop.entity.RamEntity;
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.laptopshop.laptopshop.entity.ImageProductEntity;
+import com.laptopshop.laptopshop.entity.ProductEntity;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)

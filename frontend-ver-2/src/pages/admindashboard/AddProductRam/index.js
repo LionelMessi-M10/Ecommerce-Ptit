@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 
 import { FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { fetchDataFromApi, postData } from "../../../utils/api";
+import { postData } from "../../../utils/api";
 import {
   deleteProductRam,
   fetchProductRam,
