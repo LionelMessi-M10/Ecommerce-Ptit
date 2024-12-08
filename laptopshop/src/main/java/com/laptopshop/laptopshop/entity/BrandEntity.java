@@ -1,5 +1,6 @@
 package com.laptopshop.laptopshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class BrandEntity extends BaseEntity {
     private Short status;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 

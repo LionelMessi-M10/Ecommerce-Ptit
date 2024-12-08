@@ -34,8 +34,8 @@ public class AuthController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-
-            UserEntity user = userService.createUser(userDTO);
+            String requestUserEmail = "";
+            UserEntity user = userService.createUser(userDTO,requestUserEmail);
             return ResponseEntity.ok(user);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage()); // rule 5

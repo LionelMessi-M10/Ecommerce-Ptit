@@ -1,6 +1,7 @@
 package com.laptopshop.laptopshop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class RoleEntity {
     private String roleName;
 
     @ManyToMany(mappedBy = "roleEntities", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JsonBackReference
     private List<UserEntity> userEntities = new ArrayList<>();
 
     public static String ADMIN = "ROLE_ADMIN";

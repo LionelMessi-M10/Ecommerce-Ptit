@@ -1,20 +1,25 @@
 package com.laptopshop.laptopshop.controller.seller;
 
-import com.laptopshop.laptopshop.constant.Constant;
-import com.laptopshop.laptopshop.models.dto.ProductDTO;
-import com.laptopshop.laptopshop.models.response.CoreResponse;
-import com.laptopshop.laptopshop.service.IProductService;
-import com.laptopshop.laptopshop.utils.UploadFile;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import com.laptopshop.laptopshop.constant.Constant;
+import com.laptopshop.laptopshop.models.dto.ProductDTO;
+import com.laptopshop.laptopshop.models.response.CoreResponse;
+import com.laptopshop.laptopshop.models.response.ProductResponse;
+import com.laptopshop.laptopshop.service.IProductService;
+import com.laptopshop.laptopshop.utils.UploadFile;
 
 @RestController
-@RequestMapping("${api.seller}/products")
+@RequestMapping("/seller")
 public class ProductController {
 
     private final UploadFile uploadFile;
@@ -25,12 +30,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CoreResponse> createProduct(@RequestPart(value = "product", required = false) ProductDTO productDTO,
-                                                      @RequestPart(value = "imageProducts", required = false) MultipartFile[] multipartFiles) {
+    @PostMapping(value = "/createProduct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<CoreResponse> createProduct(
+            @RequestPart(value = "product", required = false) ProductDTO productDTO,
+            @RequestPart(value = "imageProducts", required = false) MultipartFile[] multipartFiles) {
 
         if (multipartFiles != null && multipartFiles.length > 0) {
-            productDTO.setImageProductPath(Arrays.stream(multipartFiles).map(uploadFile::uploadFile).collect(Collectors.toList()));
+            productDTO.setImageProductPath(
+                    Arrays.stream(multipartFiles).map(uploadFile::uploadFile).collect(Collectors.toList()));
         }
 
         CoreResponse coreResponse = new CoreResponse()
@@ -41,13 +48,14 @@ public class ProductController {
         return ResponseEntity.ok(coreResponse);
     }
 
-    @PutMapping(value = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/updateProduct/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
-                                           @RequestPart(value = "product", required = false) ProductDTO productDTO,
-                                           @RequestPart(value = "imageProducts", required = false) MultipartFile[] multipartFiles) {
+            @RequestPart(value = "product", required = false) ProductDTO productDTO,
+            @RequestPart(value = "imageProducts", required = false) MultipartFile[] multipartFiles) {
 
         if (multipartFiles != null && multipartFiles.length > 0) {
-            productDTO.setImageProductPath(Arrays.stream(multipartFiles).map(uploadFile::uploadFile).collect(Collectors.toList()));
+            productDTO.setImageProductPath(
+                    Arrays.stream(multipartFiles).map(uploadFile::uploadFile).collect(Collectors.toList()));
         }
 
         CoreResponse coreResponse = new CoreResponse()
@@ -58,14 +66,34 @@ public class ProductController {
         return ResponseEntity.ok(coreResponse);
     }
 
-    @PutMapping("/delete/{id}")
+    @PutMapping("/deleteProduct/{id}")
     public ResponseEntity<?> disabledProduct(@PathVariable("id") Long id) {
-
         productService.disabledProduct(id);
-
         CoreResponse coreResponse = new CoreResponse()
                 .setCode(Constant.SUCCESS)
                 .setMessage(Constant.SUCCESS_MESSAGE);
+        return ResponseEntity.ok(coreResponse);
+    }
+
+    @GetMapping("/getAllProducts")
+    public ResponseEntity<CoreResponse> getAllProductsPages(
+            @RequestParam(defaultValue = "0", required = false) int page,
+            @RequestParam(defaultValue = "10", required = false) int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Lấy danh sách tất cả sản phẩm từ service với phân trang
+        Page<ProductResponse> productPage = productService.getAllProductsPages(pageable);
+
+        // Tạo CoreResponse để trả về
+        CoreResponse coreResponse = new CoreResponse()
+                .setCode(Constant.SUCCESS)
+                .setMessage(Constant.SUCCESS_MESSAGE)
+                .setData(productPage.getContent()) // Dữ liệu sản phẩm
+                .setPageNumber(productPage.getNumber()) // Trang hiện tại
+                .setPageSize(productPage.getSize()) // Kích thước trang
+                .setTotalElements(productPage.getTotalElements()) // Tổng số sản phẩm
+                .setTotalPages(productPage.getTotalPages()); // Tổng số trang
 
         return ResponseEntity.ok(coreResponse);
     }

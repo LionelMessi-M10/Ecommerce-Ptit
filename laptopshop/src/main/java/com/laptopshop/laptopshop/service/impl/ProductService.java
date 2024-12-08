@@ -9,9 +9,10 @@ import com.laptopshop.laptopshop.models.request.ProductSearchRequest;
 import com.laptopshop.laptopshop.models.response.ProductResponse;
 import com.laptopshop.laptopshop.repository.*;
 import com.laptopshop.laptopshop.service.IProductService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,10 +39,24 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Page<ProductResponse> getAllProductsPages(Pageable pageable) {
+        // Lấy danh sách sản phẩm từ repository, phân trang theo Pageable
+        Page<ProductEntity> productEntities = productRepository.findAll(pageable);
+
+        // Chuyển đổi ProductEntity sang ProductResponse
+        List<ProductResponse> productResponses = productEntities.getContent().stream()
+                .map(productConverter::convertToResponse)
+                .collect(Collectors.toList());
+
+        // Trả về Page chứa danh sách ProductResponse
+        return new PageImpl<>(productResponses, pageable, productEntities.getTotalElements());
+    }
+
+    @Override
     public Page<ProductResponse> getProductPage(ProductSearchRequest productSearchRequest) {
         Pageable pageable = PageRequest.of(productSearchRequest.getPage() - 1, productSearchRequest.getSize());
 
-        Page<ProductEntity> productEntityPage = productRepository.searchProducts(productSearchRequest.getKeyword(), productSearchRequest.getPriceFrom(), productSearchRequest.getPriceTo(), productSearchRequest.getRating(), productSearchRequest.getCategoryId(), pageable);
+        Page<ProductEntity> productEntityPage = productRepository.searchProducts(productSearchRequest.getKeyword(), productSearchRequest.getLocation(),  productSearchRequest.getPriceFrom(), productSearchRequest.getPriceTo(), productSearchRequest.getRating(), productSearchRequest.getCategoryId(), pageable);
 
         return productEntityPage.map(productConverter::convertToResponse);
     }
@@ -55,19 +70,27 @@ public class ProductService implements IProductService {
     @Transactional
     @Override
     public ProductResponse save(ProductDTO productDTO) {
-        ProductEntity productEntity = productConverter.convertToEntity(productDTO);
-        productEntity.setEnabled((short) 1);
+        try {
+            System.out.println("Hello hELLO");
+            ProductEntity productEntity = productConverter.convertToEntity(productDTO);
+            productEntity.setEnabled((short) 1);
+            System.out.println("Hello Bayby");
+            productRepository.save(productEntity);
 
-        productRepository.save(productEntity);
-
-        return productConverter.convertToResponse(productEntity);
+            return productConverter.convertToResponse(productEntity);
+        } catch (Exception e) {
+            e.printStackTrace(); // In ra thông báo lỗi chi tiết
+            throw new RuntimeException("Error while saving product", e);
+        }
     }
 
     @Transactional
     @Override
     public ProductResponse update(ProductDTO productDTO, Long id) {
-        ProductEntity productEntity = productRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Product not found"));
+        ProductEntity productEntity = productRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Product not found"));
 
+        // Cập nhật các thuộc tính khác của sản phẩm
         productEntity.setThumbnail(productDTO.getThumbnail());
         productEntity.setProductName(productDTO.getProductName());
         productEntity.setOldPrice(productDTO.getOldPrice());
@@ -79,33 +102,40 @@ public class ProductService implements IProductService {
         productEntity.setLocation(productDTO.getLocation());
         productEntity.setEnabled(productDTO.getEnabled());
 
-        if(productDTO.getProductSizeId() != null) {
+        // Cập nhật các quan hệ khác
+        if (productDTO.getProductSizeId() != null) {
             productEntity.setProductSizeEntity(productSizeRepository.findById(productDTO.getProductSizeId()).orElse(null));
         }
-        if(productDTO.getProductWeightId() != null) {
+        if (productDTO.getProductWeightId() != null) {
             productEntity.setProductWeightEntity(productWeightRepository.findById(productDTO.getProductWeightId()).orElse(null));
         }
-        if(productDTO.getRamId() != null) {
+        if (productDTO.getRamId() != null) {
             productEntity.setRamEntity(ramRepository.findById(productDTO.getRamId()).orElse(null));
         }
-        if(!productDTO.getVariantId().isEmpty()) {
+        if (!productDTO.getVariantId().isEmpty()) {
             productEntity.setVariantEntities(productDTO.getVariantId()
                     .stream()
-                    .map(
-                            item -> variantRepository.findById(item).orElse(null))
+                    .map(item -> variantRepository.findById(item).orElse(null))
                     .collect(Collectors.toList()));
         }
 
-        productEntity.setImageProductEntities(productDTO.getImageProductPath()
-                .stream()
-                .map(item -> new ImageProductEntity(item, productEntity))
-                .collect(Collectors.toList())
-        );
+        if (productDTO.getImageProductPath() != null) {
+            List<ImageProductEntity> updatedImages = productDTO.getImageProductPath().stream()
+                    .map(item -> new ImageProductEntity(item, productEntity))
+                    .collect(Collectors.toList());
 
+            List<ImageProductEntity> currentImages = productEntity.getImageProductEntities();
+            currentImages.removeIf(image -> !updatedImages.contains(image));
+
+            productEntity.getImageProductEntities().clear();
+            productEntity.getImageProductEntities().addAll(updatedImages);
+        }
+        // Lưu và làm mới dữ liệu
         productRepository.saveAndFlush(productEntity);
 
         return productConverter.convertToResponse(productEntity);
     }
+
 
     @Transactional
     @Override
@@ -128,4 +158,27 @@ public class ProductService implements IProductService {
 
         return productEntities.stream().map(productConverter::convertToResponse).collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ProductResponse> searchProducts(ProductSearchRequest searchRequest, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Lấy danh sách sản phẩm từ repository
+        Page<ProductEntity> productEntities = productRepository.searchProducts(
+                searchRequest.getKeyword(),
+                searchRequest.getLocation(),
+                searchRequest.getPriceFrom(),
+                searchRequest.getPriceTo(),
+                searchRequest.getRating(),
+                searchRequest.getCategoryId(),
+                pageable
+        );
+
+        // Chuyển đổi danh sách ProductEntity thành ProductResponse
+        Page<ProductResponse> productResponses = productEntities.map(productEntity -> new ProductResponse(productEntity));
+
+        return productResponses;
+    }
+
 }

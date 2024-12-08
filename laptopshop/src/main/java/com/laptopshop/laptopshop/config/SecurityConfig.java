@@ -36,7 +36,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)  // Tắt CSRF protection vì chúng ta dùng JWT
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/shop/users/register", "/shop/users/login").permitAll()  // Đường dẫn công khai
+                        .requestMatchers("/shop/users/register", "/shop/users/login").permitAll()  // Đường dẫn công khai
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Chỉ cho ADMIN truy cập
 //                        .requestMatchers("/seller/**").hasAnyRole("SELLER", "ADMIN")  // SELLER và ADMIN có thể truy cập
                         .anyRequest().permitAll()  // Các yêu cầu còn lại phải được xác thực

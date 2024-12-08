@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -77,7 +78,7 @@ public class ProductEntity extends BaseEntity {
     @JoinTable(name = "product_coupons", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "coupon_id"))
     private List<CouponEntity> couponEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "productEntity", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST }, orphanRemoval = true)
+    @OneToMany(mappedBy = "productEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageProductEntity> imageProductEntities = new ArrayList<>();
 
     @ManyToOne
@@ -90,13 +91,16 @@ public class ProductEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_size_id")
+    @JsonManagedReference
     private ProductSizeEntity productSizeEntity;
 
     @ManyToOne
     @JoinColumn(name = "product_weight_id")
+    @JsonManagedReference
     private ProductWeightEntity productWeightEntity;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "product_ram_id")
     private RamEntity ramEntity;
 
